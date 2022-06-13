@@ -10,30 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Template4432
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для MingalievWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MingalievWindow : Window
     {
-        public MainWindow()
+        public MingalievWindow()
         {
             InitializeComponent();
-        }
-
-        private void BnTask_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BnFirst_Click(object sender, RoutedEventArgs e)
-        {
-            MingalievWindow mingalievWindow = new MingalievWindow();
-            mingalievWindow.ShowDialog();
         }
     }
 }
