@@ -36,5 +36,6 @@
         </Grid.RowDefinitions>
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnFirst" Click="BnFirst_Click" Content="Мингалиев" Grid.Row="1"></Button>
+        <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
     </Grid>
 </Window>
