@@ -35,5 +35,11 @@ namespace Template4432
             MingalievWindow mingalievWindow = new MingalievWindow();
             mingalievWindow.ShowDialog();
         }
+
+        private void BnNineteenStakheevVadim4432_Click(object sender, RoutedEventArgs e)
+        {
+            StakheevWindow stakheevWindow = new StakheevWindow();
+            stakheevWindow.ShowDialog();
+        }
     }
 }
