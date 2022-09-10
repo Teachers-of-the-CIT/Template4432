@@ -41,5 +41,11 @@ namespace Template4432
             StakheevWindow stakheevWindow = new StakheevWindow();
             stakheevWindow.ShowDialog();
         }
+
+        private void BnThirteen_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Naumkina naumkinaWindow = new _4432_Naumkina();
+            naumkinaWindow.ShowDialog();
+        }
     }
 }
