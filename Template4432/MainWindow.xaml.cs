@@ -47,5 +47,10 @@ namespace Template4432
             _4432_Naumkina naumkinaWindow = new _4432_Naumkina();
             naumkinaWindow.ShowDialog();
         }
+
+        private void BnEleven_Click(object sender, RoutedEventArgs e)
+        {
+            _ = new _4432_Latypov().ShowDialog();
+        }
     }
 }

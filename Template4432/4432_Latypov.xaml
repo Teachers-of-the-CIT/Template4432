@@ -1,0 +1,12 @@
+﻿<Window x:Class="Template4432._4432_Latypov"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Template4432"
+        mc:Ignorable="d"
+        Title="_4432_Latypov" Height="200" Width="300" Background="AliceBlue">
+    <DockPanel>
+        <TextBlock FontStyle="Italic" FontFamily="Calibri" TextAlignment="Center" Height="40" FontSize="20">Латыпов Дамир 19 лет</TextBlock>
+    </DockPanel>
+</Window>
