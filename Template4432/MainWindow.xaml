@@ -39,6 +39,7 @@
         <Button x:Name="BnEleven" Click="BnEleven_Click"  Content="Латыпов Дамир" Grid.Row="11"></Button>
         <Button x:Name="BnSixteen" Click="BnSixteen_Click"  Content="Рахимов Ранис" Grid.Row="16"></Button>
         <Button x:Name="BnThirteen" Click="BnThirteen_Click" Content="Наумкина" Grid.Row="13"/>
+        <Button x:Name="BnTwentyfour" Click="BnTwentyfour_Click" Content="Федорова" Grid.Row="24"/>
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
     </Grid>
 </Window>

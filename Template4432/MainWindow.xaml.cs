@@ -58,5 +58,11 @@ namespace Template4432
             _4432_RakhimovRanis rakhimovWindow = new _4432_RakhimovRanis();
             rakhimovWindow.ShowDialog();
         }
+
+        private void BnTwentyfour_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Fedorova fedorovaWindow = new _4432_Fedorova();
+            fedorovaWindow.ShowDialog();
+        }
     }
 }
