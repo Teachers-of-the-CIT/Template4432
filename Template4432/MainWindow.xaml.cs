@@ -52,5 +52,11 @@ namespace Template4432
         {
             _ = new _4432_Latypov().ShowDialog();
         }
+
+        private void BnSixteen_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_RakhimovRanis rakhimovWindow = new _4432_RakhimovRanis();
+            rakhimovWindow.ShowDialog();
+        }
     }
 }
