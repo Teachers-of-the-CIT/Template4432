@@ -82,6 +82,9 @@
     <Compile Include="4432_Vlasova.xaml.cs">
       <DependentUpon>4432_Vlasova.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Zaripov.xaml.cs">
+      <DependentUpon>4432_Zaripov.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_Vlasova.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Zaripov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

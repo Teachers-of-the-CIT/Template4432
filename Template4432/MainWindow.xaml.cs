@@ -47,8 +47,12 @@ namespace Template4432
             _4432_Naumkina naumkinaWindow = new _4432_Naumkina();
             naumkinaWindow.ShowDialog();
         }
+        private void BnTen_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Zaripov zaripovWindow = new _4432_Zaripov();
+            zaripovWindow.ShowDialog();
+        }
 
-        
 
         private void BnSixteen_Click(object sender, RoutedEventArgs e)
         {
@@ -85,6 +89,10 @@ namespace Template4432
         {
             _4432_Valiakhmetov valiakhmetov = new _4432_Valiakhmetov();
             valiakhmetov.ShowDialog();
+        }
+        private void BnEleven_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
