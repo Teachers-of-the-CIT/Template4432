@@ -94,5 +94,11 @@ namespace Template4432
         {
 
         }
+
+        private void BnNine_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Darchuk Darchuk = new _4432_Darchuk();
+            Darchuk.ShowDialog();
+        }
     }
 }
