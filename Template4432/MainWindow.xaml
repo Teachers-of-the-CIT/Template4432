@@ -1,4 +1,4 @@
-﻿<Window x:Class="Template4432.MainWindow"
+<Window x:Class="Template4432.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -49,6 +49,7 @@
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
         <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>
+        <Button x:Name="BnSecond" Click="BnSecond_Click" Content="Абрамов Олег Николаевич 19.04.2003" Grid.Row="2"/>
         <Button x:Name="BnNine" Click="BnNine_Click" Content="Дарчук Александр" Grid.Row="9"></Button>
     </Grid>
 </Window>

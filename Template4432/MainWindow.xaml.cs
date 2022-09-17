@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Template4432.Forms;
 
 namespace Template4432
 {
@@ -95,6 +96,11 @@ namespace Template4432
 
         }
 
+        private void BnSecond_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Abramov().Show();
+        }
+        
         private void BnNine_Click(object sender, RoutedEventArgs e)
         {
             _4432_Darchuk Darchuk = new _4432_Darchuk();

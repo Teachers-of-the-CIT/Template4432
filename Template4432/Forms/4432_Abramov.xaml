@@ -1,0 +1,19 @@
+﻿<Window x:Class="Template4432.Forms._4432_Abramov"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Template4432.Forms"
+        mc:Ignorable="d"
+        Title="Audi 100 typ 443Q Quattro Sport S743" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0">Audi 100 C3 Sport Exklusiv S743</Label>
+        <Label Grid.Row="1">Возраст: 32</Label>
+        <Label Grid.Row="2">Двигатель: МС2 (165 л.с., рабочий объем: 2.23 л., степень сжатия: 8.4, октановое число бензина: 95, диаметр цилиндров: 81 мм)</Label>
+    </Grid>
+</Window>
