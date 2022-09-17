@@ -80,5 +80,10 @@ namespace Template4432
             _4432_LatypovaDina _4432_LatypovaDina = new _4432_LatypovaDina();
             _4432_LatypovaDina.ShowDialog();
         }
+
+        private void BnThird_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
