@@ -85,6 +85,11 @@ namespace Template4432
             _4432_LatypovaDina.ShowDialog();
         }
 
+        private void BnThird_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Valiakhmetov valiakhmetov = new _4432_Valiakhmetov();
+            valiakhmetov.ShowDialog();
+        }
         private void BnEleven_Click(object sender, RoutedEventArgs e)
         {
 
