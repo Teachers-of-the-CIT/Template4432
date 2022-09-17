@@ -58,6 +58,9 @@
     <Compile Include="4432_Latypov.xaml.cs">
       <DependentUpon>4432_Latypov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_LatypovaDina.xaml.cs">
+      <DependentUpon>4432_LatypovaDina.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Naumkina.xaml.cs">
       <DependentUpon>4432_Naumkina.xaml</DependentUpon>
     </Compile>
@@ -71,6 +74,10 @@
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="4432_Latypov.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_LatypovaDina.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

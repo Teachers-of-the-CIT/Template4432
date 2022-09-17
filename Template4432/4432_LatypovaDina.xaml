@@ -1,0 +1,13 @@
+﻿<Window x:Class="Template4432._4432_LatypovaDina"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Template4432"
+        mc:Ignorable="d"
+        Title="_4432_LatypovaDina" Height="450" Width="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Height="149" Margin="42,110,0,0" TextWrapping="Wrap" Text="Латыпова Дина, полных лет 19" TextAlignment="Center" VerticalAlignment="Top" Width="702" FontSize="24" FontStyle="Italic"/>
+
+    </Grid>
+</Window>
