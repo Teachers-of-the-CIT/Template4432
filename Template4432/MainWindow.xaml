@@ -41,5 +41,6 @@
         <Button x:Name="BnFourteenth" Click="BnFourteenth_Click" Content="Нурыев" Grid.Row="14"/>
         <Button x:Name="BnSixteen" Click="BnSixteen_Click"  Content="Рахимов Ранис" Grid.Row="16"></Button>
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
+        <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
     </Grid>
 </Window>
