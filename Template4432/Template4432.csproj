@@ -73,6 +73,9 @@
     <Compile Include="4432_RakhimovRanis.xaml.cs">
       <DependentUpon>4432_RakhimovRanis.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Sharipov.xaml.cs">
+      <DependentUpon>4432_Sharipov.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Vlasova.xaml.cs">
       <DependentUpon>4432_Vlasova.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_RakhimovRanis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Sharipov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
