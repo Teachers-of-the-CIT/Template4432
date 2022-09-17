@@ -37,7 +37,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnFirst" Click="BnFirst_Click" Content="Мингалиев" Grid.Row="1"></Button>
-
+        
         <Button x:Name="BnTen" Click="BnTen_Click"  Content="Зарипов Шамиль" Grid.Row="10"></Button>
         <Button x:Name="BnEleven" Click="BnEleven_Click"  Content="Латыпов Дамир" Grid.Row="11"></Button>
         <Button x:Name="Bn12" Click="Bn12_Click"  Content="Латыпова Дина" Grid.Row="12"></Button>
@@ -49,5 +49,6 @@
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
         <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>
+        <Button x:Name="BnNine" Click="BnNine_Click" Content="Дарчук Александр" Grid.Row="9"></Button>
     </Grid>
 </Window>
