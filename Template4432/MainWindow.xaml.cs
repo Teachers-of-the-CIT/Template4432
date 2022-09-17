@@ -63,6 +63,11 @@ namespace Template4432
         {
             _4432_Vlasova vlasovaWindow = new _4432_Vlasova();
             vlasovaWindow.ShowDialog();
+
+        private void BnFourteenth_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Nuryev nuryevwindow = new _4432_Nuryev();
+            nuryevwindow.ShowDialog();
         }
     }
 }
