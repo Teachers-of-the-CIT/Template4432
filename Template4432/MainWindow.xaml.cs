@@ -63,6 +63,10 @@ namespace Template4432
             _4432_Fedorova fedorovaWindow = new _4432_Fedorova();
             fedorovaWindow.ShowDialog();
         }
+        private void BnTwentyFive_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Sharipov().ShowDialog();
+        }
         private void BnSeventh_Click(object sender, RoutedEventArgs e)
         {
             _4432_Vlasova vlasovaWindow = new _4432_Vlasova();
