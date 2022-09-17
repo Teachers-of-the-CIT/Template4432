@@ -64,8 +64,14 @@
     <Compile Include="4432_Naumkina.xaml.cs">
       <DependentUpon>4432_Naumkina.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Nuryev.xaml.cs">
+      <DependentUpon>4432_Nuryev.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_RakhimovRanis.xaml.cs">
       <DependentUpon>4432_RakhimovRanis.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="4432_Vlasova.xaml.cs">
+      <DependentUpon>4432_Vlasova.xaml</DependentUpon>
     </Compile>
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
@@ -82,7 +88,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="4432_Nuryev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="4432_RakhimovRanis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Vlasova.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
