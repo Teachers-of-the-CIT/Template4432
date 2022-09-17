@@ -83,7 +83,8 @@ namespace Template4432
 
         private void BnThird_Click(object sender, RoutedEventArgs e)
         {
-
+            _4432_Valiakhmetov valiakhmetov = new _4432_Valiakhmetov();
+            valiakhmetov.ShowDialog();
         }
     }
 }
