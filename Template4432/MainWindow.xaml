@@ -1,4 +1,4 @@
-﻿<Window x:Class="Template4432.MainWindow"
+<Window x:Class="Template4432.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -37,7 +37,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnFirst" Click="BnFirst_Click" Content="Мингалиев" Grid.Row="1"></Button>
-
+        
         <Button x:Name="BnTen" Click="BnTen_Click"  Content="Зарипов Шамиль" Grid.Row="10"></Button>
         <Button x:Name="BnEleven" Click="BnEleven_Click"  Content="Латыпов Дамир" Grid.Row="11"></Button>
         <Button x:Name="Bn12" Click="Bn12_Click"  Content="Латыпова Дина" Grid.Row="12"></Button>
@@ -50,5 +50,6 @@
         <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>
         <Button x:Name="BnSecond" Click="BnSecond_Click" Content="Абрамов Олег Николаевич 19.04.2003" Grid.Row="2"/>
+        <Button x:Name="BnNine" Click="BnNine_Click" Content="Дарчук Александр" Grid.Row="9"></Button>
     </Grid>
 </Window>
