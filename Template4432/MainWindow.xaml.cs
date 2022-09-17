@@ -58,8 +58,7 @@ namespace Template4432
             _4432_RakhimovRanis rakhimovWindow = new _4432_RakhimovRanis();
             rakhimovWindow.ShowDialog();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BnFourteenth_Click(object sender, RoutedEventArgs e)
         {
             _4432_Nuryev nuryevwindow = new _4432_Nuryev();
             nuryevwindow.ShowDialog();
