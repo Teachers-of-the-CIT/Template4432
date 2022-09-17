@@ -40,7 +40,10 @@
         <Button x:Name="Bn12" Click="Bn12_Click"  Content="Латыпова Дина" Grid.Row="12"></Button>
         <Button x:Name="BnSixteen" Click="BnSixteen_Click"  Content="Рахимов Ранис" Grid.Row="16"></Button>
         <Button x:Name="BnThirteen" Click="BnThirteen_Click" Content="Наумкина" Grid.Row="13"/>
+        <Button x:Name="BnTwentyfour" Click="BnTwentyfour_Click" Content="Федорова" Grid.Row="24"/>
+        <Button x:Name="BnFourteenth" Click="BnFourteenth_Click" Content="Нурыев" Grid.Row="14"/>
+        <Button x:Name="BnSixteen" Click="BnSixteen_Click"  Content="Рахимов Ранис" Grid.Row="16"></Button>
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
-        <Button Content="Нурыев" HorizontalAlignment="Left" Grid.Row="14" VerticalAlignment="Top" Width="392" Height="31" Click="Button_Click"/>
+        <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
     </Grid>
 </Window>

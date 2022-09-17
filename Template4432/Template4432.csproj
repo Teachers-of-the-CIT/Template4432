@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="4432_Fedorova.xaml.cs">
+      <DependentUpon>4432_Fedorova.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Latypov.xaml.cs">
       <DependentUpon>4432_Latypov.xaml</DependentUpon>
     </Compile>
@@ -70,9 +73,16 @@
     <Compile Include="4432_RakhimovRanis.xaml.cs">
       <DependentUpon>4432_RakhimovRanis.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Vlasova.xaml.cs">
+      <DependentUpon>4432_Vlasova.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="4432_Fedorova.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="4432_Latypov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -90,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_RakhimovRanis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Vlasova.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
