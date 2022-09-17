@@ -48,10 +48,7 @@ namespace Template4432
             naumkinaWindow.ShowDialog();
         }
 
-        private void BnEleven_Click(object sender, RoutedEventArgs e)
-        {
-            _ = new _4432_Latypov().ShowDialog();
-        }
+        
 
         private void BnSixteen_Click(object sender, RoutedEventArgs e)
         {
@@ -72,6 +69,12 @@ namespace Template4432
         {
             _4432_Nuryev nuryevwindow = new _4432_Nuryev();
             nuryevwindow.ShowDialog();
+        }
+
+        private void Bn12_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_LatypovaDina _4432_LatypovaDina = new _4432_LatypovaDina();
+            _4432_LatypovaDina.ShowDialog();
         }
     }
 }
