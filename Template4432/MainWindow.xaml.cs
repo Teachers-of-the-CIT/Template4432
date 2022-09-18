@@ -106,5 +106,10 @@ namespace Template4432
             _4432_Darchuk Darchuk = new _4432_Darchuk();
             Darchuk.ShowDialog();
         }
+
+        private void BnTwenty_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Suhanova().Show();
+        }
     }
 }
