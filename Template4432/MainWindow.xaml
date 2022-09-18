@@ -51,5 +51,6 @@
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>
         <Button x:Name="BnSecond" Click="BnSecond_Click" Content="Абрамов Олег Николаевич 19.04.2003" Grid.Row="2"/>
         <Button x:Name="BnNine" Click="BnNine_Click" Content="Дарчук Александр" Grid.Row="9"></Button>
+        <Button x:Name="BnTwenty" Content="Суханова Ксения" Grid.Row="20" Click="BnTwenty_Click"></Button>
     </Grid>
 </Window>
