@@ -14,7 +14,22 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock FontSize="26" Text="Имя: Вадим" Height="40" VerticalAlignment="Top" Margin="5,5,5,5"></TextBlock>
-        <TextBlock FontSize="26" Text="Возраст: 19" Height="40" VerticalAlignment="Top"  Margin="5,35,5,5"></TextBlock>
+        <Button Width="300" Height="50" Content="Импорт данных" Margin="0,0,0,20" VerticalAlignment="Bottom" FontSize="26" Background="Cornsilk" Click="ImportExcelStakheev">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="40"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Width="300" Height="50" Content="Экспорт в Excel" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="26" Background="Cornsilk" Click="ExportExcelStakheev">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="40"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBlock FontSize="26" Text="Имя: Вадим" Height="40" VerticalAlignment="Top" Width="200" HorizontalAlignment="Left" Margin="5,5,5,5"></TextBlock>
+        <TextBlock FontSize="26" Text="Возраст: 19" Height="40" VerticalAlignment="Top" Width="200" HorizontalAlignment="Left"  Margin="5,35,5,5"></TextBlock>
+        <TextBlock FontSize="26" FontWeight="Bold" Text="8 Вариант" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"  Margin="5,70,5,5"></TextBlock>
     </Grid>
 </Window>
