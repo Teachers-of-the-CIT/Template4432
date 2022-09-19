@@ -39,45 +39,54 @@ namespace Template4432
             ofd.DefaultExt = "*.xls;*.xlsx";
             ofd.Filter = "файл Excel .xlsx|*.xlsx";
             ofd.Title = "Выберите файл";
-            ofd.ShowDialog();
-
-            Excel.Application app = new Excel.Application();
-            Excel.Workbook book = app.Workbooks.Open(ofd.FileName);
-            Excel.Worksheet sheet = app.Worksheets.Item[1];
-            var lastCell = sheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);//последнюю ячейку
-            int lastColumn = (int)lastCell.Column;
-            int lastRow = (int)lastCell.Row;
-            for (int i = 0; i < lastRow - 1; i++)
+          bool? resultdialog=  ofd.ShowDialog();
+            if (resultdialog == true)
             {
-                Employee employee = new Employee();
-                string str = sheet.Cells[1][i + 2].Text;
-                str = str.Remove(0, 3);
-                employee.Id = int.Parse(str);
-                employee.Post = sheet.Cells[2][i + 2].Text;
-                employee.FIO = sheet.Cells[3][i + 2].Text;
-                employee.Login = sheet.Cells[4][i + 2].Text;
-                employee.Password = sheet.Cells[5][i + 2].Text;
-                employee.LastAuth = sheet.Cells[6][i + 2].Text;
-                employee.AuthType = sheet.Cells[7][i + 2].Text;
-                db.EmployeeSet.Add(employee);
+                Excel.Application app = new Excel.Application();
+                Excel.Workbook book = app.Workbooks.Open(ofd.FileName);
+                Excel.Worksheet sheet = app.Worksheets.Item[1];
+                var lastCell = sheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);//последнюю ячейку
+                int lastColumn = (int)lastCell.Column;
+                int lastRow = (int)lastCell.Row;
+                for (int i = 0; i < lastRow - 1; i++)
+                {
+                    Employee employee = new Employee();
+                    string str = sheet.Cells[1][i + 2].Text;
+                    str = str.Remove(0, 3);
+                    employee.Id = int.Parse(str);
+                    employee.Post = sheet.Cells[2][i + 2].Text;
+                    employee.FIO = sheet.Cells[3][i + 2].Text;
+                    employee.Login = sheet.Cells[4][i + 2].Text;
+                    employee.Password = sheet.Cells[5][i + 2].Text;
+                    employee.LastAuth = sheet.Cells[6][i + 2].Text;
+                    employee.AuthType = sheet.Cells[7][i + 2].Text;
+                    db.EmployeeSet.Add(employee);
+                }
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("Такой ключ уже есть в базе данных");
+                }
+                book.Close();
+                app.Quit();
+                MessageBox.Show("Данные были импортированы");
+                /* string result = "";
+                 foreach (Employee item in users)
+                 {
+                     result += "Пользователь: " + item.Id + " \n";
+                     result += "Должность: " + item.Post + " \n";
+                     result += "ФИО: " + item.FIO + " \n";
+                     result += "Логин: " + item.Login + " \n";
+                     result += "Пароль: " + item.Password + " \n";
+                     result += "Последний вход: " + item.LastAuth + " \n";
+                     result += "Тип входа: " + item.AuthType + " \n";
+                     result += "\n";
+                 }
+                 MessageBox.Show(result);*/
             }
-            db.SaveChanges();
-            book.Close();
-            app.Quit();
-            MessageBox.Show("Данные были импортированы");
-           /* string result = "";
-            foreach (Employee item in users)
-            {
-                result += "Пользователь: " + item.Id + " \n";
-                result += "Должность: " + item.Post + " \n";
-                result += "ФИО: " + item.FIO + " \n";
-                result += "Логин: " + item.Login + " \n";
-                result += "Пароль: " + item.Password + " \n";
-                result += "Последний вход: " + item.LastAuth + " \n";
-                result += "Тип входа: " + item.AuthType + " \n";
-                result += "\n";
-            }
-            MessageBox.Show(result);*/
         }
 
         private void ExportExcelStakheev(object sender, RoutedEventArgs e)
@@ -100,13 +109,10 @@ namespace Template4432
                     counter = 0;
                     sheets++;
                     sheet = app.Worksheets[sheets];
+                    sheet.Name = item.Post;
                     sheet.Cells[1][1] = "Код сотрудника";
-                    sheet.Cells[2][1] = "Должность";
-                    sheet.Cells[3][1] = "ФИО";
-                    sheet.Cells[4][1] = "Логин";
-                    sheet.Cells[5][1] = "Пароль";
-                    sheet.Cells[6][1] = "Последний вход";
-                    sheet.Cells[7][1] = "Тип входа";
+                    sheet.Cells[2][1] = "ФИО";
+                    sheet.Cells[3][1] = "Логин";
                     //Стиль
                     Excel.Range range = sheet.Range[sheet.Cells[1][1], sheet.Cells[7][1]];
                     range.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
@@ -119,12 +125,8 @@ namespace Template4432
                     range.Borders[Excel.XlBordersIndex.xlInsideVertical].LineStyle = Excel.XlLineStyle.xlDot;
                     counter++;
                     sheet.Cells[1][counter + 1] = item.Id;
-                    sheet.Cells[2][counter + 1] = item.Post;
-                    sheet.Cells[3][counter + 1] = item.FIO;
-                    sheet.Cells[4][counter + 1] = item.Login;
-                    sheet.Cells[5][counter + 1] = item.Password;
-                    sheet.Cells[6][counter + 1] = item.LastAuth;
-                    sheet.Cells[7][counter + 1] = item.AuthType;
+                    sheet.Cells[2][counter + 1] = item.FIO;
+                    sheet.Cells[3][counter + 1] = item.Login;
                     //Стиль
                     Excel.Range range2 = sheet.Range[sheet.Cells[1][counter + 1], sheet.Cells[7][counter + 1]];
                     range2.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
@@ -139,12 +141,8 @@ namespace Template4432
                 else
                 {
                     sheet.Cells[1][counter + 1] = item.Id;
-                    sheet.Cells[2][counter + 1] = item.Post;
-                    sheet.Cells[3][counter + 1] = item.FIO;
-                    sheet.Cells[4][counter + 1] = item.Login;
-                    sheet.Cells[5][counter + 1] = item.Password;
-                    sheet.Cells[6][counter + 1] = item.LastAuth;
-                    sheet.Cells[7][counter + 1] = item.AuthType;
+                    sheet.Cells[2][counter + 1] = item.FIO;
+                    sheet.Cells[3][counter + 1] = item.Login;
                     //Стиль
                     Excel.Range range = sheet.Range[sheet.Cells[1][counter + 1], sheet.Cells[7][counter + 1]];
                     range.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
