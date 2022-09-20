@@ -93,7 +93,7 @@ namespace Template4432
         }
         private void BnEleven_Click(object sender, RoutedEventArgs e)
         {
-
+            new _4432_Latypov().Show();
         }
 
         private void BnSecond_Click(object sender, RoutedEventArgs e)
