@@ -111,5 +111,11 @@ namespace Template4432
         {
             new _4432_Suhanova().Show();
         }
+
+        private void BnFour_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Bastanov bastanov = new _4432_Bastanov();
+            bastanov.ShowDialog();            
+        }
     }
 }
