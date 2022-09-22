@@ -28,8 +28,21 @@
                 </Style>
             </Button.Resources>
         </Button>
+        <Button Width="300" Height="50" Content="Импорт JSON данных" Margin="20,0,0,100" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="26" Background="CornflowerBlue" Click="ImportFromJsonStakheev">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="40"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Width="300" Height="50" Content="Экспорт в Word" Margin="0,0,20,100" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="26" Background="CornflowerBlue" Click="ExportToWordStakheev">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="40"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
         <TextBlock FontSize="26" Text="Имя: Вадим" Height="40" VerticalAlignment="Top" Width="200" HorizontalAlignment="Left" Margin="5,5,5,5"></TextBlock>
         <TextBlock FontSize="26" Text="Возраст: 19" Height="40" VerticalAlignment="Top" Width="200" HorizontalAlignment="Left"  Margin="5,35,5,5"></TextBlock>
-        <TextBlock FontSize="26" FontWeight="Bold" Text="8 Вариант" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"  Margin="5,70,5,5"></TextBlock>
     </Grid>
 </Window>
