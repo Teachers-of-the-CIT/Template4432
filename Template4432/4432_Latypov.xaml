@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
-        Title="_4432_Latypov" Height="200" Width="300" Background="AliceBlue">
+        Title="_4432_Latypov" Height="300" Width="400" Background="AliceBlue">
     <DockPanel>
         <TextBlock FontStyle="Italic" FontFamily="Calibri" TextAlignment="Center" Height="40" FontSize="20">Латыпов Дамир 19 лет</TextBlock>
+        <Button Name="Import" Click="Import_Click" Margin="0,149,0,1" Width="77" Content="Импорт данных"></Button>
+        <Button Name="Export" Click="Export_Click" Margin="-100,10,10,136" Width="85" Content="Экспорт в Excel"></Button>
     </DockPanel>
 </Window>
