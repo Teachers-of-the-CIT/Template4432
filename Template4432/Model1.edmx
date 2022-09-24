@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ISRPOModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "ISRPO.dbo.Zakaz" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Zakaz">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Kod_zakaza" />
+            <PropertyRef Name="Data_zakaza" />
+            <PropertyRef Name="Vremya" />
+            <PropertyRef Name="Kod_klienta" />
+            <PropertyRef Name="Uslugi" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Data_zakriritiya" />
+            <PropertyRef Name="Vremya_prokata" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Kod_zakaza" Type="int" Nullable="false" />
+          <Property Name="Data_zakaza" Type="date" Nullable="false" />
+          <Property Name="Vremya" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Kod_klienta" Type="int" Nullable="false" />
+          <Property Name="Uslugi" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Data_zakriritiya" Type="date" Nullable="false" />
+          <Property Name="Vremya_prokata" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Хранилище ISRPOModelContainer">
+          <EntitySet Name="Zakaz" EntityType="Self.Zakaz" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Zakaz].[ID] AS [ID], 
+    [Zakaz].[Kod_zakaza] AS [Kod_zakaza], 
+    [Zakaz].[Data_zakaza] AS [Data_zakaza], 
+    [Zakaz].[Vremya] AS [Vremya], 
+    [Zakaz].[Kod_klienta] AS [Kod_klienta], 
+    [Zakaz].[Uslugi] AS [Uslugi], 
+    [Zakaz].[Status] AS [Status], 
+    [Zakaz].[Data_zakriritiya] AS [Data_zakriritiya], 
+    [Zakaz].[Vremya_prokata] AS [Vremya_prokata]
+    FROM [dbo].[Zakaz] AS [Zakaz]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ISRPOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Zakaz">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Kod_zakaza" />
+            <PropertyRef Name="Data_zakaza" />
+            <PropertyRef Name="Vremya" />
+            <PropertyRef Name="Kod_klienta" />
+            <PropertyRef Name="Uslugi" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Data_zakriritiya" />
+            <PropertyRef Name="Vremya_prokata" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Kod_zakaza" Type="Int32" Nullable="false" />
+          <Property Name="Data_zakaza" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Vremya" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Kod_klienta" Type="Int32" Nullable="false" />
+          <Property Name="Uslugi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Data_zakriritiya" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Vremya_prokata" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ISRPOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Zakaz" EntityType="Self.Zakaz" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ISRPOModelContainer" CdmEntityContainer="ISRPOEntities">
+          <EntitySetMapping Name="Zakaz">
+            <EntityTypeMapping TypeName="ISRPOModel.Zakaz">
+              <MappingFragment StoreEntitySet="Zakaz">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kod_zakaza" ColumnName="Kod_zakaza" />
+                <ScalarProperty Name="Data_zakaza" ColumnName="Data_zakaza" />
+                <ScalarProperty Name="Vremya" ColumnName="Vremya" />
+                <ScalarProperty Name="Kod_klienta" ColumnName="Kod_klienta" />
+                <ScalarProperty Name="Uslugi" ColumnName="Uslugi" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Data_zakriritiya" ColumnName="Data_zakriritiya" />
+                <ScalarProperty Name="Vremya_prokata" ColumnName="Vremya_prokata" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

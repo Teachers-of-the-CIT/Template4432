@@ -7,7 +7,15 @@
         mc:Ignorable="d"
         Title="_4432_LatypovaDina" Height="450" Width="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="149" Margin="42,110,0,0" TextWrapping="Wrap" Text="Латыпова Дина, полных лет 19" TextAlignment="Center" VerticalAlignment="Top" Width="702" FontSize="24" FontStyle="Italic"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button x:Name="BtnImport" Click="Button_Click" FontFamily="Segoe UI Black" FontSize="20">Импорт данных</Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Button x:Name="BtnExport" FontFamily="Segoe UI Black" FontSize="20">Экспорт в Excel</Button>
+        </Grid>
     </Grid>
 </Window>
