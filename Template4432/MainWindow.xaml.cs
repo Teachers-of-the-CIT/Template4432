@@ -111,5 +111,11 @@ namespace Template4432
         {
             new _4432_Suhanova().Show();
         }
+
+        private void Btn_Fakhrutdinov_form_click(object sender, RoutedEventArgs e)
+        {
+            _4432_Fakhrutdinov_Marat Fakhrutdinov_Marat_window = new _4432_Fakhrutdinov_Marat();
+            Fakhrutdinov_Marat_window.ShowDialog();
+        }
     }
 }
