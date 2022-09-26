@@ -1,20 +1,13 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using Newtonsoft.Json;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using Template4432.Export.Models.Dto;
+using System.IO;
 
 namespace Template4432
 {
@@ -146,6 +139,58 @@ namespace Template4432
                 }
                 app.Visible = true;
             });
+
+        }
+
+        private void ImportJson_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "Выберите файл базы данных"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+            List<ServiceDto> items;
+            using (StreamReader r = new StreamReader($"{ofd.FileName}"))
+            {
+                string json = r.ReadToEnd();
+                items = JsonConvert.DeserializeObject<List<ServiceDto>>(json);
+            }
+            lock (ofd) // operation with database should be thread safe!
+            {
+                using (SecondISRPOLabaEntities entities = new SecondISRPOLabaEntities())
+                {
+                    entities.Services.AddRange(items.Select(s => new Services
+                    {
+                        id = s.IdServices,
+                        name = s.NameServices,
+                        type = s.TypeOfService,
+                        code = s.CodeService,
+                        cost = s.Cost
+                    }));
+                    entities.SaveChanges();
+                }
+            }
+        }
+
+        private void ExportJson_Click(object sender, RoutedEventArgs e)
+        {
+            List<Services> allServices;
+            using (SecondISRPOLabaEntities usersEntities = new SecondISRPOLabaEntities())
+            {
+                allServices = usersEntities.Services.ToList()
+                    .OrderBy(s => s.name)
+                    .ToList();
+            }
+            #region convenient grouping structure
+            var studentsCategories = allServices
+                    .OrderBy(o => o.cost)
+                    .GroupBy(s => s.cost)
+                    .ToDictionary(g => g.Key, g => g.Select(s => new { s.id, s.name, s.type, s.cost })
+                    .ToArray());
+            #endregion
 
         }
     }
