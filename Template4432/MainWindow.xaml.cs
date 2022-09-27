@@ -126,5 +126,22 @@ namespace Template4432
         {
             new _4432_RakhimovRamil().Show();
         }
+
+        private void BnUniversal(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)sender;
+            Window w = null;
+
+            if (b.Content.ToString() == "Ашрафзянов Марат")
+                w = new _4432_Ashrafzianov();
+            if (w != null)
+            {
+                w.Show();
+                this.Visibility = Visibility.Hidden;
+                w.Closed += (_s, _e) => {
+                    this.Visibility = Visibility.Visible;
+                };
+            }
+        }
     }
 }
