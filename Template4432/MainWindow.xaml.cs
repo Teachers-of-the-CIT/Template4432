@@ -117,5 +117,10 @@ namespace Template4432
             _4432_Fakhrutdinov_Marat Fakhrutdinov_Marat_window = new _4432_Fakhrutdinov_Marat();
             Fakhrutdinov_Marat_window.ShowDialog();
         }
+
+        private void BnFifteen_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_RakhimovRamil().Show();
+        }
     }
 }

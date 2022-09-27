@@ -85,6 +85,9 @@
     <Compile Include="4432_Nuryev.xaml.cs">
       <DependentUpon>4432_Nuryev.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_RakhimovRamil.xaml.cs">
+      <DependentUpon>4432_RakhimovRamil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_RakhimovRanis.xaml.cs">
       <DependentUpon>4432_RakhimovRanis.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_Nuryev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_RakhimovRamil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
