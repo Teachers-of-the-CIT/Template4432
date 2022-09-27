@@ -93,7 +93,7 @@ namespace Template4432
         }
         private void BnEleven_Click(object sender, RoutedEventArgs e)
         {
-
+            new _4432_Latypov().Show();
         }
 
         private void BnSecond_Click(object sender, RoutedEventArgs e)
@@ -111,11 +111,15 @@ namespace Template4432
         {
             new _4432_Suhanova().Show();
         }
-
         private void BnFour_Click(object sender, RoutedEventArgs e)
         {
             _4432_Bastanov bastanov = new _4432_Bastanov();
             bastanov.ShowDialog();            
+        }
+        private void Btn_Fakhrutdinov_form_click(object sender, RoutedEventArgs e)
+        {
+            _4432_Fakhrutdinov_Marat Fakhrutdinov_Marat_window = new _4432_Fakhrutdinov_Marat();
+            Fakhrutdinov_Marat_window.ShowDialog();
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿<Window x:Class="Template4432._4432_Fakhrutdinov_Marat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Template4432"
+        mc:Ignorable="d"
+        Title="_4432_Fakhrutdinov_Marat" Height="450" Width="800" Background="LightYellow">
+    <Grid>
+        <Button Height="25" Content="Назад" FontSize="14" Background="AliceBlue" Click="close_window" Margin="675,399,10,10">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBlock FontSize="40" Height="60" VerticalAlignment="Center" Margin="123,0,123,0" FontWeight="Bold"><Run Language="ru-ru" Text="Фахрутдинов Марат, 19 лет"/></TextBlock>
+    </Grid>
+</Window>
