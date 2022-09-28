@@ -126,5 +126,11 @@ namespace Template4432
         {
             new _4432_RakhimovRamil().Show();
         }
+
+        private void BtnSmolinAleksandr_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Smolin().Show();
+
+        }
     }
 }
