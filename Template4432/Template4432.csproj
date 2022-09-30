@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="4432_Ashrafzianov.xaml.cs">
+      <DependentUpon>4432_Ashrafzianov.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Bastanov.xaml.cs">
       <DependentUpon>4432_Bastanov.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="4432_Ashrafzianov.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="4432_Bastanov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
