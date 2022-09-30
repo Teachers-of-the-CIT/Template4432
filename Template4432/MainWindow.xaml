@@ -46,6 +46,7 @@
         <Button x:Name="BnTwentyfive" Click="BnTwentyFive_Click" Content="Шарипов" Grid.Row="25"/>
         <Button x:Name="BnFourteenth" Click="BnFourteenth_Click" Content="Нурыев" Grid.Row="14"/>
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
+        <Button x:Name="BnEighteen" Click="BtnSmolinAleksandr_Click" Content="Смолин Александр" Grid.Row="18"></Button>
         <Button x:Name="BnTwentyFirst" Click="Btn_Fakhrutdinov_form_click" Content="Фахрутдинов Марат" Grid.Row="21"></Button>
         <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>

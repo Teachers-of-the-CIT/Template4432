@@ -103,6 +103,9 @@
     <Compile Include="4432_Sharipov.xaml.cs">
       <DependentUpon>4432_Sharipov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Smolin.xaml.cs">
+      <DependentUpon>4432_Smolin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Suhanova.xaml.cs">
       <DependentUpon>4432_Suhanova.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_Sharipov.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Smolin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
