@@ -93,7 +93,7 @@ namespace Template4432
         }
         private void BnEleven_Click(object sender, RoutedEventArgs e)
         {
-
+            new _4432_Latypov().Show();
         }
 
         private void BnSecond_Click(object sender, RoutedEventArgs e)
@@ -110,6 +110,41 @@ namespace Template4432
         private void BnTwenty_Click(object sender, RoutedEventArgs e)
         {
             new _4432_Suhanova().Show();
+        }
+        private void BnFour_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Bastanov bastanov = new _4432_Bastanov();
+            bastanov.ShowDialog();            
+        }
+        private void Btn_Fakhrutdinov_form_click(object sender, RoutedEventArgs e)
+        {
+            _4432_Fakhrutdinov_Marat Fakhrutdinov_Marat_window = new _4432_Fakhrutdinov_Marat();
+            Fakhrutdinov_Marat_window.ShowDialog();
+        }
+
+        private void BnFifteen_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_RakhimovRamil().Show();
+        }
+        private void BnUniversal(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button)sender;
+            Window w = null;
+
+            if (b.Content.ToString() == "Ашрафзянов Марат")
+                w = new _4432_Ashrafzianov();
+            if (w != null)
+            {
+                w.Show();
+                this.Visibility = Visibility.Hidden;
+                w.Closed += (_s, _e) => {
+                    this.Visibility = Visibility.Visible;
+                };
+            }
+        }
+        private void BtnSmolinAleksandr_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Smolin().Show();
         }
     }
 }

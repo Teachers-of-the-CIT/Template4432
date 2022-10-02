@@ -37,7 +37,6 @@
         </Grid.RowDefinitions>
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnFirst" Click="BnFirst_Click" Content="Мингалиев" Grid.Row="1"></Button>
-        
         <Button x:Name="BnTen" Click="BnTen_Click"  Content="Зарипов Шамиль" Grid.Row="10"></Button>
         <Button x:Name="BnEleven" Click="BnEleven_Click"  Content="Латыпов Дамир" Grid.Row="11"></Button>
         <Button x:Name="Bn12" Click="Bn12_Click"  Content="Латыпова Дина" Grid.Row="12"></Button>
@@ -47,10 +46,15 @@
         <Button x:Name="BnTwentyfive" Click="BnTwentyFive_Click" Content="Шарипов" Grid.Row="25"/>
         <Button x:Name="BnFourteenth" Click="BnFourteenth_Click" Content="Нурыев" Grid.Row="14"/>
         <Button x:Name="BnNineteen" Click="BnNineteenStakheevVadim4432_Click" Content="Стахеев Вадим" Grid.Row="19"></Button>
+        <Button x:Name="BnEighteen" Click="BtnSmolinAleksandr_Click" Content="Смолин Александр" Grid.Row="18"></Button>
+        <Button x:Name="BnTwentyFirst" Click="Btn_Fakhrutdinov_form_click" Content="Фахрутдинов Марат" Grid.Row="21"></Button>
         <Button x:Name="BnSeventh" Click="BnSeventh_Click" Content="Власова" Grid.Row="7"/>
         <Button x:Name="BnThird" Click="BnThird_Click" Content="Валиахметов" Grid.Row="3"/>
         <Button x:Name="BnSecond" Click="BnSecond_Click" Content="Абрамов Олег Николаевич 19.04.2003" Grid.Row="2"/>
         <Button x:Name="BnNine" Click="BnNine_Click" Content="Дарчук Александр" Grid.Row="9"></Button>
         <Button x:Name="BnTwenty" Content="Суханова Ксения" Grid.Row="20" Click="BnTwenty_Click"></Button>
+        <Button x:Name="BnFifteen" Content="Рахимов Рамиль" Grid.Row="15" Click="BnFifteen_Click"></Button>
+        <Button x:Name="BnFour" Content="Бастанов Айрат" Grid.Row="4" Click="BnFour_Click"></Button>
+        <Button x:Name="Bn5" Content="Ашрафзянов Марат" Grid.Row="5" Click="BnUniversal"></Button>
     </Grid>
 </Window>

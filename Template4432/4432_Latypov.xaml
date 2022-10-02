@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
-        Title="_4432_Latypov" Height="200" Width="300" Background="AliceBlue">
-    <DockPanel>
-        <TextBlock FontStyle="Italic" FontFamily="Calibri" TextAlignment="Center" Height="40" FontSize="20">Латыпов Дамир 19 лет</TextBlock>
-    </DockPanel>
+        Title="_4432_Latypov" Height="300" Width="400" Background="AliceBlue">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock FontStyle="Italic" FontFamily="Calibri" TextAlignment="Center" Height="40" TextWrapping="Wrap" FontSize="15" Grid.Row="1" Grid.Column="2">Латыпов Дамир 19 лет</TextBlock>
+        <Button Name="Import" Click="Import_Click" Grid.Row="0" Grid.Column="0" Content="Импорт данных"></Button>
+        <Button Name="Export" Click="Export_Click" Grid.Row="1" Grid.Column="0" Content="Экспорт в Excel"></Button>
+        <Button Name="ImportJson" Click="ImportJson_Click" Grid.Row="0" Grid.Column="3" Content="Импорт JSON данных"></Button>
+        <Button Name="ExportJson" Click="ExportJson_Click" Grid.Row="1" Grid.Column="3" Content="Экспорт в Word"></Button>
+    </Grid>
 </Window>
