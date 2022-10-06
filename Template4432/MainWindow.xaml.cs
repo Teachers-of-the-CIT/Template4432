@@ -143,5 +143,10 @@ namespace Template4432
                 };
             }
         }
+
+        private void BTwentySix_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
