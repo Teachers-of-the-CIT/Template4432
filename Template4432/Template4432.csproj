@@ -35,15 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -112,6 +110,12 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="C3xlsx.cs">
+      <DependentUpon>VlasovaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Clients.cs">
+      <DependentUpon>VlasovaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
@@ -136,6 +140,21 @@
     </Compile>
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VlasovaModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VlasovaModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VlasovaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VlasovaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VlasovaModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VlasovaModel.edmx</DependentUpon>
     </Compile>
     <Page Include="4432_Ashrafzianov.xaml">
       <SubType>Designer</SubType>
@@ -256,6 +275,13 @@
     <None Include="ServicesModel.edmx.diagram">
       <DependentUpon>ServicesModel.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="VlasovaModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VlasovaModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="VlasovaModel.edmx.diagram">
+      <DependentUpon>VlasovaModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -303,6 +329,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ServicesModel.edmx</DependentUpon>
       <LastGenOutput>ServicesModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="VlasovaModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VlasovaModel.edmx</DependentUpon>
+      <LastGenOutput>VlasovaModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="VlasovaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VlasovaModel.edmx</DependentUpon>
+      <LastGenOutput>VlasovaModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

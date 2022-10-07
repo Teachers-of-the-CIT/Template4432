@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="_4432_Vlasova" Height="450" Width="800">
     <Grid>
-        <TextBlock TextAlignment="Center" Height="40" FontSize="20">Светлана 18 лет играю в доту</TextBlock>
+        <TextBlock TextAlignment="Center" Height="40" FontSize="20" Margin="0,0,0,379">Светлана 19 лет играю в доту</TextBlock>
+        <Button x:Name="importButton" Margin="20,59,639,326" Content="Импорт" FontFamily="Comic Sans MS" FontSize="20" Click="importButton_Click"/>
+        <Button x:Name="exportButton" Margin="190,59,469,326" Content="Экспорт" FontFamily="Comic Sans MS" FontSize="20" Click="exportButton_Click"/>
     </Grid>
 </Window>
