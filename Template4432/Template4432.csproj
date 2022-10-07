@@ -112,9 +112,30 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ClientData.cs">
+      <DependentUpon>RakhimovRanisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Clients.cs">
+      <DependentUpon>RakhimovRanisModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RakhimovRanisModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RakhimovRanisModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RakhimovRanisModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RakhimovRanisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RakhimovRanisModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RakhimovRanisModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Services.cs">
       <DependentUpon>ServicesModel.tt</DependentUpon>
@@ -253,6 +274,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ServicesModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="RakhimovRanisModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RakhimovRanisModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="RakhimovRanisModel.edmx.diagram">
+      <DependentUpon>RakhimovRanisModel.edmx</DependentUpon>
+    </None>
     <None Include="ServicesModel.edmx.diagram">
       <DependentUpon>ServicesModel.edmx</DependentUpon>
     </None>
@@ -294,6 +322,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RakhimovRanisModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RakhimovRanisModel.edmx</DependentUpon>
+      <LastGenOutput>RakhimovRanisModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RakhimovRanisModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RakhimovRanisModel.edmx</DependentUpon>
+      <LastGenOutput>RakhimovRanisModel.cs</LastGenOutput>
+    </Content>
     <Content Include="ServicesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ServicesModel.Context.cs</LastGenOutput>
