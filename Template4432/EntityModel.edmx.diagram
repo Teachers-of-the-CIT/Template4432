@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="81eea5285b684912b0eec636d69fbff9" Name="Diagram1">
-        <EntityTypeShape EntityType="SecondISRPOLabaModel.Services" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="a668cc31d31e4fd99ac96316444fdb8d" Name="Diagram1">
+        <EntityTypeShape EntityType="ISRPODBModel.Client" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

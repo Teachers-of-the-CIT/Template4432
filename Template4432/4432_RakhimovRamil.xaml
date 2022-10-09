@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
         Title="_4432_RakhimovRamil" Height="450" Width="800">
-    <Grid>
+    <UniformGrid Rows="3">
+        <UniformGrid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Height" Value="100"/>
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </UniformGrid.Resources>
         <TextBlock TextAlignment="Center" FontFamily="Roboto" Width="400" Height="150" TextWrapping="WrapWithOverflow" FontSize="30">Рахимов Рамиль, 19 лет Город Казань🔥🔥🔥 Татарин😈</TextBlock>
-    </Grid>
+        <Button Content="Импорт данных" Click="Button_Import_Click"/>
+        <Button Content="Экспорт данных" Click="Button_Export_Click"/>
+    </UniformGrid>
 </Window>

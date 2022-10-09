@@ -109,27 +109,27 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Services.cs">
-      <DependentUpon>ServicesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ServicesModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServicesModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ServicesModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServicesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ServicesModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServicesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="StakheevWindow.xaml.cs">
       <DependentUpon>StakheevWindow.xaml</DependentUpon>
@@ -237,17 +237,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="EntityModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EntityModel.edmx.diagram">
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <EntityDeploy Include="ServicesModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ServicesModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ServicesModel.edmx.diagram">
-      <DependentUpon>ServicesModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -287,19 +287,22 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ServicesModel.Context.tt">
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ServicesModel.Context.cs</LastGenOutput>
-      <DependentUpon>ServicesModel.edmx</DependentUpon>
+      <LastGenOutput>EntityModel.Context.cs</LastGenOutput>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
     </Content>
-    <Content Include="ServicesModel.tt">
+    <Content Include="EntityModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ServicesModel.edmx</DependentUpon>
-      <LastGenOutput>ServicesModel.cs</LastGenOutput>
+      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
