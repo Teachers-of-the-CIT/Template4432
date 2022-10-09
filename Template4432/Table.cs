@@ -12,12 +12,16 @@ namespace Template4432
     using System;
     using System.Collections.Generic;
     
-    public partial class Services
+    public partial class Table
     {
         public int id { get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
-        public string code { get; set; }
-        public Nullable<decimal> cost { get; set; }
+        public string OrderCode { get; set; }
+        public string CreatingDate { get; set; }
+        public string Time { get; set; }
+        public string ClientCode { get; set; }
+        public string Services { get; set; }
+        public string Status { get; set; }
+        public string DateOfClosing { get; set; }
+        public string RentTime { get; set; }
     }
 }

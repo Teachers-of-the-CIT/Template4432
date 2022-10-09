@@ -8,5 +8,7 @@
         Title="_4432_Nuryev" Height="450" Width="800">
     <Grid>
         <TextBlock TextAlignment="Center" Height="40" FontSize="20">Адель 19 лет</TextBlock>
+        <Button Name="ExcelImport" Content="Импорт из Excel" HorizontalAlignment="Left" Margin="334,241,0,0" VerticalAlignment="Top" Width="121" Height="38" Click="ExcelImport_Click"/>
+        <Button Name="ExcelExport"  Content="Экспорт в Excel" HorizontalAlignment="Left" Margin="334,296,0,0" VerticalAlignment="Top" Width="121" Height="38" Click="ExcelExport_Click"/>
     </Grid>
 </Window>
