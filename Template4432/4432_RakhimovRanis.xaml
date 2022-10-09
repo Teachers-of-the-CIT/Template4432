@@ -21,5 +21,7 @@
         <DockPanel Grid.ColumnSpan="2" Grid.Row="1">
             <TextBlock FontFamily="Times New Roman" TextAlignment="Center" Height="50" FontSize="27">Приятно познакомиться, я Рахимов Ранис, мне 19 лет, холост!</TextBlock>
         </DockPanel>
+        <Button Name="ImportJson" Grid.Row="2" Content="Импорт данных Json" Height="50" Click="ImportJson_Click"></Button>
+        <Button Name="EcsportWord" Grid.Column="1" Grid.Row="2" Content="Экспорт в Word" Height="50" Click="EcsportWord_Click"></Button>
     </Grid>
 </Window>

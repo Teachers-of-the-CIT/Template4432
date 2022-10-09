@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Text.Json;
+using Word = Microsoft.Office.Interop.Word;
+using Template4432.Export.Models;
 
 namespace Template4432
 {
@@ -174,6 +178,122 @@ namespace Template4432
                 app.Visible = true;
             }
             
+        }
+
+        private void ImportJson_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (3.json)|*.json",
+                Title = "Выберите файл базы данных"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+            List<ClientJson> items;
+            using (FileStream sr = new FileStream($"{ofd.FileName}", FileMode.OpenOrCreate))
+            {
+                items = JsonSerializer.Deserialize< List < ClientJson>> (sr);
+            }
+            using (LR2ISRPOEntities usersEntities = new LR2ISRPOEntities())
+            {
+                usersEntities.ClientData.AddRange(items.Select(s => new ClientData
+                {
+                    FIO = s.FullName,
+                    ClientCode = s.CodeClient,
+                    Birthdate = s.BirthDate,
+                    Index = s.Index,
+                    City = s.City,
+                    Street = s.Street,
+                    House = s.Home.ToString(),
+                    Flat = s.Kvartira.ToString(),
+                    Email = s.E_mail
+                }));
+                
+                foreach (var item in items)
+                {
+                    var currentdate = DateTime.Now;
+                    var bd = DateTime.ParseExact(item.BirthDate, "dd.MM.yyyy", null);
+                    double differentYear = currentdate.Subtract(bd).TotalDays;
+                    int days = Convert.ToInt32(differentYear);
+                    int age = days / 365;
+                    usersEntities.Clients.Add(new Clients()
+                    {
+                        FIO = item.FullName,
+                        ClientCod = item.CodeClient,
+                        Email = item.E_mail,
+                        Age = age
+
+                    });
+                }
+                usersEntities.SaveChanges();
+                MessageBox.Show("Success");
+
+            }
+        }
+
+        private void EcsportWord_Click(object sender, RoutedEventArgs e)
+        {
+            List<Clients> allClients;
+            using (LR2ISRPOEntities usersEntities = new LR2ISRPOEntities())
+            {
+                var app = new Word.Application();
+                Word.Document document = app.Documents.Add();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    allClients = i == 0 ? usersEntities.Clients.Where(w => w.Age >= 20 && w.Age <= 29).ToList()
+                    : i == 1 ? usersEntities.Clients.Where(w => w.Age >= 30 && w.Age <= 39).ToList()
+                    : usersEntities.Clients.Where(w => w.Age >= 40).ToList();
+
+                    int startRowIndex = 1;
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+
+                    range.Text = $"Категория {i + 1}";
+                    paragraph.set_Style("Заголовок 1");
+                    range.InsertParagraphAfter();
+
+
+
+                    var tableParagraph = document.Paragraphs.Add();
+                    var tableRange = tableParagraph.Range;
+                    var clientTable = document.Tables.Add(tableRange, allClients.Count()+1,3);
+                    clientTable.Borders.InsideLineStyle = clientTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    clientTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                    Word.Range cellRange;
+                    cellRange = clientTable.Cell(1, 1).Range;
+                    cellRange.Text = "Код клиента";
+                    cellRange = clientTable.Cell(1, 2).Range;
+                    cellRange.Text = "ФИО";
+                    cellRange = clientTable.Cell(1, 3).Range;
+                    cellRange.Text = "Email";
+                    clientTable.Rows[1].Range.Bold = 1;
+                    clientTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    startRowIndex++;
+
+                    foreach (Clients client in allClients)
+                    {
+                            cellRange = clientTable.Cell(startRowIndex, 1).Range;
+                            cellRange.Text = client.ClientCod.ToString();
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = clientTable.Cell(startRowIndex, 2).Range;
+                            cellRange.Text = client.FIO.ToString(); 
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = clientTable.Cell(startRowIndex, 3).Range;
+                            cellRange.Text = client.Email.ToString();
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            startRowIndex++;
+                            
+                    }
+                    document.Words.Last.InsertBreak(Microsoft.Office.Interop.Word.WdBreakType.wdSectionBreakNextPage);
+                }
+                app.Visible = true;
+                //document.SaveAs2(@"D:\outputFileWord.docx");
+                //document.SaveAs2(@"D:\outputFilePdf.pdf", Word.WdExportFormat.wdExportFormatPDF);
+            }
         }
     }
 }
