@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
         Title="_4432_Zaripov" Height="248.492" Width="353.133">
-    <Grid Margin="0,1,15,25" RenderTransformOrigin="0.5,0.5">
+    <Grid>
         <Grid.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -16,7 +16,8 @@
             </TransformGroup>
         </Grid.RenderTransform>
         <Label Content="Зарипов Шамиль лет 2022 - 2002" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="116,86,0,0"/>
-        <Button Content="назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="149,142,0,0" Click="Button_Click"/>
-
+        <Button Content="назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="22,139,0,0" Click="Button_Click"/>
+        <Button Content="Импорт" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="123,139,0,0" Click="ButtonImp_Click"/>
+        <Button Content="Экспорт" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="234,139,0,0" Click="ButtonIks_Click"/>
     </Grid>
 </Window>
