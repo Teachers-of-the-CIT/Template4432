@@ -10,5 +10,7 @@
         <TextBlock TextAlignment="Center" Height="40" FontSize="25" FontStyle="Italic" Foreground="BlueViolet">Ксения 19 лет</TextBlock>
         <Button x:Name="BnImport" Click="BnImport_Click" Height="30" Width="150" Margin="216,235,427.6,155">Импорт данных</Button>
         <Button x:Name="BnExport" Click="BnExport_Click" Height="30" Width="150" Margin="435,235,208.6,155">Экспорт в Excel</Button>
+        <Button x:Name="BnImportJson" Click="BnImportJson_Click" Height="30" Width="150" Margin="216,270,427.6,120">Импорт JSON  данных</Button>
+        <Button x:Name="BnExportWord" Click="BnExportWord_Click" Height="30" Width="150" Margin="435,270,208.6,120">Экспорт в Word</Button>
     </Grid>
 </Window>
