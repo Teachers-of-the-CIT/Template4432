@@ -78,7 +78,7 @@ namespace Template4432
 
             using (isrpo_lr2Entities db = new isrpo_lr2Entities())
             {
-                listData = db.data.ToList().OrderBy(x => x.kind_service).ToList();
+                listData = db.data.ToList().OrderBy(x => x.kind_service).OrderBy(x => x.cost).ToList();
             }
             var allKindServise = listData.GroupBy(x => x.kind_service).ToList();
 
