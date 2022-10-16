@@ -19,5 +19,7 @@
         <Button Content="назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="22,139,0,0" Click="Button_Click"/>
         <Button Content="Импорт" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="123,139,0,0" Click="ButtonImp_Click"/>
         <Button Content="Экспорт" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="234,139,0,0" Click="ButtonIks_Click"/>
+        <Button Content="Импорт JSON данных" HorizontalAlignment="Left" VerticalAlignment="Top" Width="176" Margin="22,164,0,0" Click="ButtonImpJSON_Click"/>
+        <Button Content="Экспорт в WORD" HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Margin="203,164,0,0" Click="ButtonIksWord_Click"/>
     </Grid>
 </Window>

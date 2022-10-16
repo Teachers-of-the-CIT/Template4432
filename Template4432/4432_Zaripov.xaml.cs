@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +15,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json.Serialization;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
+
 
 namespace Template4432
 {
@@ -31,6 +36,48 @@ namespace Template4432
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private async void ButtonImpJSON_Click(object sender, RoutedEventArgs e)
+        {
+            var text = "";
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл JSON(Spisok.json) | *.json",
+                Title = "Выберите файл базы данных"
+            };
+
+            if (!(ofd.ShowDialog() == true))
+                return;
+
+            var path = ofd.FileName;
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                text = await reader.ReadToEndAsync();
+            }         
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+            {
+                List<tableIsrpo3> users = await JsonSerializer.DeserializeAsync<List<tableIsrpo3>>(fs);
+                using (JSONEntities us = new JSONEntities())
+                {
+                    foreach(var person in users)
+                    {
+                        us.tableIsrpo3.Add(new tableIsrpo3()
+                        {
+                            Id = person.Id,
+                            Position = person.Position,
+                            FullName = person.FullName,
+                            Log = person.Log,
+                            Password = person.Password
+                        });
+                        us.SaveChanges();
+                    }                                     
+                }
+                MessageBox.Show("Успешно!");
+
+            }
         }
 
         private void ButtonImp_Click(object sender, RoutedEventArgs e)
@@ -100,6 +147,71 @@ namespace Template4432
             return Convert.ToBase64String(dst);
         }
 
+        private void ButtonIksWord_Click(object sender, RoutedEventArgs e)
+        {
+            List<tableIsrpo3> allItems;
+            List<string> allItemsGroupRole;
+            using(JSONEntities ent = new JSONEntities())
+            {
+                allItems = ent.tableIsrpo3.ToList().OrderBy(f=>f.Position).ToList();
+                allItemsGroupRole = allItems.Select(f => f.Position).Distinct().ToList();
+                var grouping = allItems.GroupBy(f => f.Position).ToList();
+                var app = new Word.Application();
+                Word.Document document = app.Documents.Add();
+                foreach(var group in allItemsGroupRole)
+                {
+                    var groupObjCount = grouping.Find(f => f.Key == group).Select(g=>g.FullName).Count();
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+                    range.Text = group;
+                    paragraph.set_Style("Заголовок 1");
+                    range.InsertParagraphAfter();
+                   
+                    Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                    Word.Range tableRange = tableParagraph.Range;
+                    Word.Table studentsTable = document.Tables.Add(tableRange, groupObjCount + 1, 3);
+                    
+                    studentsTable.Borders.InsideLineStyle = studentsTable.Borders.OutsideLineStyle =
+                    Word.WdLineStyle.wdLineStyleSingle;
+                    
+                    Word.Range cellRange;
+                    studentsTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                   
+                    cellRange = studentsTable.Cell(1, 1).Range;
+                    cellRange.Text = "Логин";
+                    cellRange = studentsTable.Cell(1, 2).Range;
+                    cellRange.Text = "Пароль";
+                    cellRange = studentsTable.Cell(1, 3).Range;
+                    cellRange.Text = "Хеш пароля";
+                    studentsTable.Rows[1].Range.Bold = 1;
+                    studentsTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    int i = 1;
+                    
+                    foreach(var cur in allItems)
+                    {
+                        if (cur.Position == group)
+                        {
+                            cellRange = studentsTable.Cell(i + 1, 1).Range;
+                            cellRange.Text = cur.Log.ToString();
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = studentsTable.Cell(i + 1, 2).Range;
+                            cellRange.Text = cur.Password;
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = studentsTable.Cell(i + 1, 3).Range;
+                            cellRange.Text = HashPassword(cur.Log);                            
+                            cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            i++;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }                    
+                }
+                app.Visible = true;
+            }
+        }
+
         private void ButtonIks_Click(object sender, RoutedEventArgs e)
         {
             List<tableIsrpo2> allItems;
@@ -151,5 +263,9 @@ namespace Template4432
                 app.Visible = true;            
             }
         }
+
+        
+
+       
     }
 }
