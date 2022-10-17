@@ -93,7 +93,7 @@ namespace Template4432
                 int startRowIndex = 1;
                 var worksheet = app.Worksheets.Item[i + 1];
                 worksheet.Name = $"Тип входа {i + 1}";
-                worksheet.Cells[1][startRowIndex] = "Код клиента";
+                worksheet.Cells[1][startRowIndex] = "Код сотрудника";
                 worksheet.Cells[2][startRowIndex] = "Должность";
                 worksheet.Cells[3][startRowIndex] = "Логин";
                 startRowIndex++;
@@ -146,7 +146,7 @@ namespace Template4432
             MessageBox.Show("База данных успешно очищена.");
         }
 
-        private async void BtnImportJson_Click(object sender, RoutedEventArgs e)
+        private void BtnImportJson_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog()
             {
@@ -159,13 +159,83 @@ namespace Template4432
 
             FileStream inStream = File.OpenRead(ofd.FileName);
 
-            /*Employee? employeeJson = JsonSerializer.Deserialize<Employee>(inStream);
-            MessageBox.Show(employeeJson.EmployeeID);*/
+            List<Employee> employee;
+            employee = JsonSerializer.Deserialize<List<Employee>>(inStream);
+
+            using (ISRPOLab2ExcelEntities1 db = new ISRPOLab2ExcelEntities1())
+            {
+                foreach (var emp in employee)
+                {
+                    db.Employee.Add(emp);
+                }
+
+                db.SaveChanges();
+                MessageBox.Show("Сотрудники успешно добавлены");
+            }
         }
 
         private void BtnExportWord_Click(object sender, RoutedEventArgs e)
         {
+            List<Employee> allEmployee;
+            using (ISRPOLab2ExcelEntities1 db = new ISRPOLab2ExcelEntities1())
+            {
+                allEmployee = db.Employee.ToList().OrderBy(emp => emp.EmployeeFIO).ToList();
+                var entryTypeGroups = allEmployee.GroupBy(emp => emp.EmployeeTypeEntry).ToList();
 
+                var app = new Word.Application();
+                Word.Document document = app.Documents.Add();
+
+                int i = 0;
+                foreach (var group in entryTypeGroups)
+                {
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+                    range.Text = $"Тип входа {i + 1}";
+                    paragraph.set_Style("Заголовок 1");
+                    range.InsertParagraphAfter();
+                    Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                    Word.Range tableRange = tableParagraph.Range;
+                    Word.Table employeeTable = document.Tables.Add(tableRange, group.Count() + 1, 3);
+                    employeeTable.Borders.InsideLineStyle = employeeTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    employeeTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                    Word.Range cellRange;
+                    cellRange = employeeTable.Cell(1, 1).Range;
+                    cellRange.Text = "Код сотрудника";
+                    cellRange = employeeTable.Cell(1, 2).Range;
+                    cellRange.Text = "Должность";
+                    cellRange = employeeTable.Cell(1, 3).Range;
+                    cellRange.Text = "Логин";
+                    employeeTable.Rows[1].Range.Bold = 1;
+                    employeeTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    int k = 1;
+                    foreach (var currentEmployee in group)
+                    {
+                        cellRange = employeeTable.Cell(k + 1, 1).Range;
+                        cellRange.Text = currentEmployee.EmployeeID;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = employeeTable.Cell(k + 1, 2).Range;
+                        cellRange.Text = currentEmployee.EmployeePosition;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = employeeTable.Cell(k + 1, 3).Range;
+                        cellRange.Text = currentEmployee.EmployeeLogin;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        k++;
+                    }
+
+                    Word.Paragraph countEmployeeParagraph = document.Paragraphs.Add();
+                    Word.Range countEmployeeRange = countEmployeeParagraph.Range;
+                    countEmployeeRange.Text = $"Количество сотрудников с таким типом входа - {group.Count()}";
+                    countEmployeeRange.Font.Color = Word.WdColor.wdColorBlue;
+                    countEmployeeRange.InsertParagraphAfter();
+
+                    document.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
+                    app.Visible = true;
+                    document.SaveAs2(@"D:\Lab 3 Word\outputFile.docx");
+                    document.SaveAs2(@"D:\Lab 3 Word\outputFile.pdf", Word.WdExportFormat.wdExportFormatPDF);
+                }
+            }
         }
     }
 }

@@ -11,16 +11,26 @@ namespace Template4432
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
+
     public partial class Employee
     {
+        [JsonPropertyName("Id")]
         public int ID { get; set; }
+        [JsonPropertyName("CodeStaff")]
         public string EmployeeID { get; set; }
+        [JsonPropertyName("Position")]
         public string EmployeePosition { get; set; }
+        [JsonPropertyName("FullName")]
         public string EmployeeFIO { get; set; }
+        [JsonPropertyName("Log")]
         public string EmployeeLogin { get; set; }
+        [JsonPropertyName("Password")]
         public string EmployeePassword { get; set; }
+        [JsonPropertyName("LastEnter")]
         public string EmployeeLastEntry { get; set; }
+        [JsonPropertyName("TypeEnter")]
         public string EmployeeTypeEntry { get; set; }
     }
 }
