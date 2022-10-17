@@ -234,6 +234,7 @@ namespace Template4432
                     app.Visible = true;
                     document.SaveAs2(@"D:\Lab 3 Word\outputFile.docx");
                     document.SaveAs2(@"D:\Lab 3 Word\outputFile.pdf", Word.WdExportFormat.wdExportFormatPDF);
+                    i++;
                 }
             }
         }
