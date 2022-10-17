@@ -5,15 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
-        Title="_4432_Fakhrutdinov_Marat" Height="450" Width="800" Background="LightYellow">
+        Title="_4432_Fakhrutdinov_Marat" Height="450" Width="800" Background="LightYellow" MinWidth="800" MinHeight="450" MaxHeight="450" MaxWidth="800">
     <Grid>
-        <Button Height="25" Content="Назад" FontSize="14" Background="AliceBlue" Click="close_window" Margin="675,399,10,10">
+        <Button Height="22" Content="Назад" FontSize="14" Background="AliceBlue" Click="close_window" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"></Setter>
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock FontSize="40" Height="60" VerticalAlignment="Center" Margin="123,0,123,0" FontWeight="Bold"><Run Language="ru-ru" Text="Фахрутдинов Марат, 19 лет"/></TextBlock>
+        <TextBlock FontSize="40" Height="60" VerticalAlignment="Center" Margin="123,0,123,0" FontWeight="Bold" HorizontalAlignment="Center"><Run Language="ru-ru" Text="Фахрутдинов Марат, 19 лет"/></TextBlock>
+        <Button x:Name="ImportData" FontSize="14" Background="LightGreen" Click="Import_Data" Margin="271,252,0,0" FontStretch="Normal" Height="90" FontStyle="Normal" Width="124" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="45"/>
+                </Style>
+            </Button.Resources>
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold">Импортировать<LineBreak/>данные</TextBlock>
+        </Button>
+        <Button x:Name="ExcelExport_Copy" FontSize="14" Background="LightGreen" Click="export_to_excel" Margin="405,252,0,0" FontStretch="Normal" Height="90" FontStyle="Normal" Width="124" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="45"/>
+                </Style>
+            </Button.Resources>
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold"><Run Text="Экспортировать"/><LineBreak/><Run Text="в Excel"/></TextBlock>
+        </Button>
+        <TextBlock FontSize="22" Height="30" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,10"><Run Language="ru-ru" Text="3 вариант"/></TextBlock>
     </Grid>
 </Window>
