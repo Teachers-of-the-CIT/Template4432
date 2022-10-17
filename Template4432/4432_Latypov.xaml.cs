@@ -31,7 +31,7 @@ namespace Template4432
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog()
+            /*OpenFileDialog ofd = new OpenFileDialog()
             {
                 DefaultExt = "*.xls;*.xlsx",
                 Filter = "файл Excel (Spisok.xlsx)|*.xlsx",
@@ -82,12 +82,12 @@ namespace Template4432
                     }
                     entities.SaveChanges();
                 }
-            }
+            }*/
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(() => //async runtume - anti screen lock
+            /*Task.Run(() => //async runtume - anti screen lock
             {
 
                 List<Services> allServices;
@@ -146,7 +146,7 @@ namespace Template4432
                 }
                 app.Visible = true;
             });
-
+            */
         }
     }
 }

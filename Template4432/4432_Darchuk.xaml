@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
         Title="_4432_Darchuk" Height="450" Width="800">
-    <Grid>
-        <TextBlock TextAlignment="Center" FontFamily="Roboto" Height="40" FontSize="30">Александр Дарчук, 19 лет</TextBlock>
+    <Grid Background="AliceBlue">
+        <Button Name="BtnImport" Content="Импортировать из Excel" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="230" Height="60" Margin="10" Click="BtnImport_Click"/>
+        <Button x:Name="BtnClearDatabase" Content="Очистить БД" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="230" Height="60" Margin="10" Click="BtnClearDatabase_Click"/>
+        <Button Name="BtnExport" Content="Экпортировать в Excel" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Width="230" Height="60" Margin="10" Click="BtnExport_Click"/>
+
+        <TextBlock TextAlignment="Center" FontFamily="Verdana" Height="40" FontSize="30">Александр Дарчук, 19 лет</TextBlock>
+
+        <Button Name="BtnImportJson" Content="Импортировать из Json" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="230" Height="60" Margin="10" Click="BtnImportJson_Click"/>
+        <Button x:Name="BtnClearDatabase2" Content="Очистить БД" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="230" Height="60" Margin="10" Click="BtnClearDatabase_Click"/>
+        <Button Name="BtnExportWord" Content="Экпортировать в Word" FontSize="17" FontFamily="Verdana" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="230" Height="60" Margin="10" Click="BtnExportWord_Click"/>
+       
     </Grid>
 </Window>
