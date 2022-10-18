@@ -8,7 +8,9 @@
         Title="_4432_Smolin" Height="450" Width="800">
     <Grid>
         <Label HorizontalAlignment="Center" Height="50" FontSize="24">Смолин Александр,19</Label>
-        <Button Name="SmolinImportBtn" Height="80" MaxWidth="200" FontSize="24" Margin="48,279,559,75" Click="SmolinImportBtn_Click">Импорт данных</Button>
-        <Button Name="SmolinExportBtn" Height="80" MaxWidth="200" FontSize="24" Margin="550,279,57,75" Click="SmolinExportBtn_Click">Экспорт данных</Button>
+        <Button Name="SmolinImportBtn" Height="80" MaxWidth="250" FontSize="24" Margin="34,59,516,295" Click="SmolinImportBtn_Click">Импорт данных Excel</Button>
+        <Button Name="SmolinExportBtn" Height="80" MaxWidth="250" FontSize="24" Margin="511,59,23,295" Click="SmolinExportBtn_Click">Экспорт данных Excel</Button>
+        <Button x:Name="SmolinImport2" Height="80" MaxWidth="250" FontSize="24" Margin="34,307,516,47" Click="SmolinImport2_Click" Content="Импорт данных Json"/>
+        <Button x:Name="SmolinExport2" Height="80" MaxWidth="250" FontSize="24" Margin="511,307,23,47" Click="SmolinExport2_Click" Content="Экспорт данных Word"/>
     </Grid>
 </Window>
