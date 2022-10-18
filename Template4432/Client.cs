@@ -11,7 +11,8 @@ namespace Template4432
 {
     using System;
     using System.Collections.Generic;
-    
+    using Template4432.Models;
+
     public partial class Client
     {
         public string FIO { get; set; }
@@ -23,5 +24,20 @@ namespace Template4432
         public int House { get; set; }
         public int Apartment { get; set; }
         public string Email { get; set; }
+        public static Client MakeClient(JSONClient client)
+        {
+            return new Client()
+            {
+                FIO = client.FIO,
+                UserId = Convert.ToInt32(client.UserId),
+                BirthDate = client.BirthDate,
+                Index = Convert.ToInt32(client.Index),
+                City = client.City,
+                Street = client.Street,
+                House = client.House,
+                Apartment = client.Apartment,
+                Email = client.Email
+            };
+        }
     }
 }

@@ -2,17 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.IO;
+using Template4432.Models;
 
 namespace Template4432
 {
@@ -37,13 +33,9 @@ namespace Template4432
             if (!(ofd.ShowDialog() == true))
                 return;
             string[,] list;
-
             Excel.Application ObjWorkExcel = new Excel.Application();
-
             Excel.Workbook ObjWorkBook = ObjWorkExcel.Workbooks.Open(ofd.FileName);
-
             Excel.Worksheet ObjWorkSheet = (Excel.Worksheet)ObjWorkBook.Sheets[1];
-
             var lastCell = ObjWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);
             int _columns = (int)lastCell.Column;
             int _rows = (int)lastCell.Row;
@@ -80,7 +72,11 @@ namespace Template4432
                         Email = list[i, 8]
                     }); 
                 }
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch{ }
             }
         }
 
@@ -131,6 +127,106 @@ namespace Template4432
                 worksheet.Columns.AutoFit();
             }
             app.Visible = true;
+        }
+
+        private async void Button_ImportJSON_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "Файл Json (*.json)|*.json|Text files (*.txt)|*.txt",
+                Title = "Выберите файл"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+
+            var sclientList = new List<JSONClient>();
+            var clientList = new List<Client>();
+            using(FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate))
+            {
+                sclientList = await JsonSerializer.DeserializeAsync<List<JSONClient>>(fs);
+            }
+            foreach (var sc in sclientList)
+            {
+                clientList.Add(Client.MakeClient(sc));
+            }
+            using (var db = new ISRPODBEntities())
+            {
+                foreach (var client in clientList)
+                {
+                    db.Client.Add(client);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private void Button_ExportWord_Click(object sender, RoutedEventArgs e)
+        {
+            List<Client> allClients;
+            List<string> allStreets;
+            using (var isrpoEntities = new ISRPODBEntities())
+            {
+                allClients = (from c in isrpoEntities.Client
+                              orderby c.FIO
+                              select c).ToList();
+                allStreets = (from s in allClients
+                              group s by s.Street into g
+                              select g.Key).ToList();
+            }
+            var app = new Word.Application();
+            Word.Document document = app.Documents.Add();
+
+            foreach (var street in allStreets)
+            {
+                Word.Paragraph paragraph = document.Paragraphs.Add();
+                Word.Range range = paragraph.Range;
+                range.Text = street;
+                paragraph.set_Style("Заголовок 1");
+                range.InsertParagraphAfter();
+                Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                Word.Range tableRange = tableParagraph.Range;
+                Word.Table clientsTable = document.Tables.Add(tableRange, allClients.Where(c => c.Street==street).Count() + 1, 3);
+                clientsTable.Borders.InsideLineStyle = clientsTable.Borders.OutsideLineStyle =  Word.WdLineStyle.wdLineStyleSingle;
+                clientsTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                Word.Range cellRange;
+                cellRange = clientsTable.Cell(1, 1).Range;
+                cellRange.Text = "Код клиента";
+                cellRange = clientsTable.Cell(1, 2).Range;
+                cellRange.Text = "ФИО";
+                cellRange = clientsTable.Cell(1, 3).Range;
+                cellRange.Text = "Email";
+                clientsTable.Rows[1].Range.Bold = 1;
+                clientsTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                int i = 1;
+                foreach (var currentStudent in allClients.Where(c => c.Street == street))
+                {
+                    cellRange = clientsTable.Cell(i + 1, 1).Range;
+                    cellRange.Text = currentStudent.UserId.ToString();
+                    cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    cellRange = clientsTable.Cell(i + 1, 2).Range;
+                    cellRange.Text = currentStudent.FIO;
+                    cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    cellRange = clientsTable.Cell(i + 1, 3).Range;
+                    cellRange.Text = currentStudent.Email;
+                    cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    i++;
+                }
+                document.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
+            }
+            app.Visible = true;
+            document.SaveAs2(@"D:\outputFileWord.docx");
+        }
+
+        private void Button_ClearDb_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new ISRPODBEntities())
+            {
+                foreach (var client in db.Client)
+                {
+                    db.Entry(client).State = System.Data.Entity.EntityState.Deleted;
+                }
+                db.SaveChanges();
+            }
         }
     }
 }

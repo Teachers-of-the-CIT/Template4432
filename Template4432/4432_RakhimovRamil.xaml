@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
         Title="_4432_RakhimovRamil" Height="450" Width="800">
-    <UniformGrid Rows="3">
+    <UniformGrid Rows="6">
         <UniformGrid.Resources>
             <Style TargetType="Button">
-                <Setter Property="Height" Value="100"/>
+                <Setter Property="Height" Value="40"/>
                 <Setter Property="Width" Value="300"/>
                 <Setter Property="FontSize" Value="25"/>
                 <Setter Property="FontWeight" Value="Bold"/>
@@ -17,6 +17,10 @@
         </UniformGrid.Resources>
         <TextBlock TextAlignment="Center" FontFamily="Roboto" Width="400" Height="150" TextWrapping="WrapWithOverflow" FontSize="30">Рахимов Рамиль, 19 лет Город Казань🔥🔥🔥 Татарин😈</TextBlock>
         <Button Content="Импорт данных" Click="Button_Import_Click"/>
-        <Button Content="Экспорт данных" Click="Button_Export_Click"/>
+        <Button Content="Экспорт в Excel" Click="Button_Export_Click"/>
+        <Button Content="Импорт JSON данных" Click="Button_ImportJSON_Click"/>
+        <Button Content="Импорт в Word" Click="Button_ExportWord_Click"/>
+        <Button Content="Очистить бд" Click="Button_ClearDb_Click"/>
+        
     </UniformGrid>
 </Window>
