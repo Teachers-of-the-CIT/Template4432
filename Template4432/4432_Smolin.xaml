@@ -8,5 +8,7 @@
         Title="_4432_Smolin" Height="450" Width="800">
     <Grid>
         <Label HorizontalAlignment="Center" Height="50" FontSize="24">Смолин Александр,19</Label>
+        <Button Name="SmolinImportBtn" Height="80" MaxWidth="200" FontSize="24" Margin="48,279,559,75">Импорт данных</Button>
+        <Button Name="SmolinExportBtn" Height="80" MaxWidth="200" FontSize="24" Margin="550,279,57,75">Экспорт данных</Button>
     </Grid>
 </Window>
