@@ -14,7 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
-
+using Word = Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
+using System.IO;
+using System.Xml.Linq;
+using System.Text.Json;
+using System.Drawing;
 
 namespace Template4432
 {
@@ -123,6 +128,124 @@ namespace Template4432
                 app.Quit();
                 MessageBox.Show("Импорт данных завершён");
             }
-        } 
+        }
+
+        public class OrderJSON
+        {
+            public int Id { get; set; }
+            public string CodeOrder { get; set; }
+            public string CreateDate { get; set; }
+            public string CreateTime { get; set; }
+            public string CodeClient { get; set; }
+            public string Services { get; set; }
+            public string Status { get; set; }
+            public string ClosedDate { get; set; }
+            public string ProkatTime { get; set; }
+        }
+
+        private async void Import_from_JSON(object sender, RoutedEventArgs e)
+        {          
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == true)
+            {               
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                List<OrderJSON> jsonOrders = JsonSerializer.Deserialize<List<OrderJSON>>(fs);
+                foreach (OrderJSON orders in jsonOrders)
+                {
+                    Order order = new Order();
+                    order.Id = orders.Id;
+                    order.Order_code = orders.CodeOrder;
+                    order.Order_date = orders.CreateDate;
+                    order.Order_time = orders.CreateTime;
+                    order.Client_code = orders.CodeClient;
+                    order.Services = orders.Services;
+                    order.Status = orders.Status;
+                    order.Closing_date = orders.ClosedDate;
+                    order.Rental_time = orders.ProkatTime;
+                    db.Order.Add(order);
+                }
+                try
+                {
+                    db.SaveChanges();
+                    MessageBox.Show("Импорт данных завершён");
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка с переносом в бд! Попробуйте повторить перенос снова!");
+                }               
+            }
+        }
+
+        private void export_to_word(object sender, RoutedEventArgs e)
+        {
+            var app = new Word.Application();
+            Word.Document doc = app.Documents.Add();
+            Word.Paragraph paragraph = doc.Paragraphs.Add();
+            Word.Range range = paragraph.Range;
+            paragraph.set_Style("Заголовок 1");
+            range.Text = "ОТСОРТИРОВАННЫЕ ЗАКАЗЫ ПО ДАТЕ СОЗДАНИЯ";
+            range.Font.Size = 20;
+            range.Font.Name = "Times New Roman";
+            range.Font.Color = Word.WdColor.wdColorBlack;
+            range.Font.Bold = 2;
+            paragraph.Alignment = (WdParagraphAlignment)StringAlignment.Center;
+            range.InsertParagraphAfter();
+            string FullDate = null;
+
+            foreach (Order order in db.Order)
+            {
+                FullDate = order.Order_date + " " + order.Order_time;
+                DateTime dateTime = Convert.ToDateTime(FullDate);
+                ForOrderList forOrderList = new ForOrderList();
+                forOrderList.Id = order.Id;
+                forOrderList.dateTime1 = dateTime;
+                forOrderList.Order_code1 = order.Order_code;
+                forOrderList.Client_code1 = order.Client_code;
+                forOrderList.Services1 = order.Services;
+                OrderListSmall.Add(forOrderList);
+            }
+            OrderListSmall = OrderListSmall.ToList().OrderBy(p => p.dateTime1).ToList();
+
+            Word.Paragraph table = doc.Paragraphs.Add();
+            Word.Range tablerange = table.Range;
+            Word.Table employeetable = doc.Tables.Add(tablerange, OrderListSmall.Count + 1, 4);
+            employeetable.Borders.InsideLineStyle = employeetable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            employeetable.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+            Word.Range cellRange;
+            cellRange = employeetable.Cell(1, 1).Range;
+            cellRange.Text = "Id";
+            cellRange = employeetable.Cell(1, 2).Range;
+            cellRange.Text = "Код заказа";
+            cellRange = employeetable.Cell(1, 3).Range;
+            cellRange.Text = "Код клиента";
+            cellRange = employeetable.Cell(1, 4).Range;
+            cellRange.Text = "Услуги";
+            employeetable.Rows[1].Range.Bold = 1;
+            employeetable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            //Заполнение
+            int i = 1;
+            foreach (ForOrderList forOrderList1 in OrderListSmall)
+            {
+                cellRange = employeetable.Cell(i + 1, 1).Range;
+                cellRange.Text = forOrderList1.Id.ToString();
+                cellRange.ParagraphFormat.Alignment =
+                Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                cellRange = employeetable.Cell(i + 1, 2).Range;
+                cellRange.Text = forOrderList1.Order_code1;
+                cellRange.ParagraphFormat.Alignment =
+                Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                cellRange = employeetable.Cell(i + 1, 3).Range;
+                cellRange.Text = forOrderList1.Client_code1;
+                cellRange.ParagraphFormat.Alignment =
+                Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                cellRange = employeetable.Cell(i + 1, 4).Range;
+                cellRange.Text = forOrderList1.Services1;
+                cellRange.ParagraphFormat.Alignment =
+                Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                i++;
+            }
+            app.Visible = true;
+        }
     }
 }

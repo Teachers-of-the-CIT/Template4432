@@ -29,8 +29,24 @@
                     <Setter Property="CornerRadius" Value="45"/>
                 </Style>
             </Button.Resources>
-            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold"><Run Text="Экспортировать"/><LineBreak/><Run Text="в Excel"/></TextBlock>
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold"><Run Text="Экспортировать"/><LineBreak/><Run Text="данные в Excel"/></TextBlock>
         </Button>
         <TextBlock FontSize="22" Height="30" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,10"><Run Language="ru-ru" Text="3 вариант"/></TextBlock>
+        <Button x:Name="ImportData_JSON" FontSize="14" Background="LightPink" Click="Import_from_JSON" Margin="142,252,0,0" FontStretch="Normal" Height="90" FontStyle="Normal" Width="124" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="45"/>
+                </Style>
+            </Button.Resources>
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold"><Run Text="Импорт JSON"/><LineBreak/><Run Text="данных"/></TextBlock>
+        </Button>
+        <Button x:Name="Word_Export_data" FontSize="14" Background="LightPink" Click="export_to_word" Margin="534,252,0,0" FontStretch="Normal" Height="90" FontStyle="Normal" Width="124" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="45"/>
+                </Style>
+            </Button.Resources>
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold"><Run Text="Экспортировать"/><LineBreak/><Run Text="данные в word"/></TextBlock>
+        </Button>
     </Grid>
 </Window>

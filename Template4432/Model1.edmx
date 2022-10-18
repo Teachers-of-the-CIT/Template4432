@@ -4,25 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FakhrutdinovDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Order_code" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Order_date" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Order_time" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Client_code" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Services" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Closing_date" Type="nvarchar(max)" />
-          <Property Name="Rental_time" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityContainer Name="FakhrutdinovDBModelStoreContainer">
-          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="FakhrutdinovDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FakhrutdinovDBModelStoreContainer">
+    <EntitySet Name="Order" EntityType="FakhrutdinovDBModel.Store.Order" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Order_code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Order_date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Order_time" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Client_code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Services" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Closing_date" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Rental_time" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FakhrutdinovDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -49,22 +49,22 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FakhrutdinovDBModelStoreContainer" CdmEntityContainer="FakhrutdinovDBEntities">
-          <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="FakhrutdinovDBModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="Rental_time" ColumnName="Rental_time" />
-                <ScalarProperty Name="Closing_date" ColumnName="Closing_date" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Services" ColumnName="Services" />
-                <ScalarProperty Name="Client_code" ColumnName="Client_code" />
-                <ScalarProperty Name="Order_time" ColumnName="Order_time" />
-                <ScalarProperty Name="Order_date" ColumnName="Order_date" />
-                <ScalarProperty Name="Order_code" ColumnName="Order_code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="IsTypeOf(FakhrutdinovDBModel.Order)">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Order_code" ColumnName="Order_code" />
+          <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+          <ScalarProperty Name="Order_time" ColumnName="Order_time" />
+          <ScalarProperty Name="Client_code" ColumnName="Client_code" />
+          <ScalarProperty Name="Services" ColumnName="Services" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Closing_date" ColumnName="Closing_date" />
+          <ScalarProperty Name="Rental_time" ColumnName="Rental_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
