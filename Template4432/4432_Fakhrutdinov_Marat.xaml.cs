@@ -104,29 +104,36 @@ namespace Template4432
                 int lastColumn = (int)lastCell.Column;
                 int lastRow = (int)lastCell.Row;
                 for (int i = 0; i < lastRow - 1; i++)
-                {                    
-                    Order order = new Order();
-                    order.Order_code = sheet.Cells[2][i + 2].Text;
-                    order.Order_date = sheet.Cells[3][i + 2].Text;
-                    order.Order_time = sheet.Cells[4][i + 2].Text;
-                    order.Client_code = sheet.Cells[5][i + 2].Text;
-                    order.Services = sheet.Cells[6][i + 2].Text;
-                    order.Status = sheet.Cells[7][i + 2].Text;
-                    order.Closing_date = sheet.Cells[8][i + 2].Text;
-                    order.Rental_time = sheet.Cells[9][i + 2].Text;
-                    db.Order.Add(order);
+                {
+                    if (sheet.Cells[2][i + 2].Text != "")
+                    {
+                        Order order = new Order();
+                        order.Order_code = sheet.Cells[2][i + 2].Text;
+                        order.Order_date = sheet.Cells[3][i + 2].Text;
+                        order.Order_time = sheet.Cells[4][i + 2].Text;
+                        order.Client_code = sheet.Cells[5][i + 2].Text;
+                        order.Services = sheet.Cells[6][i + 2].Text;
+                        order.Status = sheet.Cells[7][i + 2].Text;
+                        order.Closing_date = sheet.Cells[8][i + 2].Text;
+                        order.Rental_time = sheet.Cells[9][i + 2].Text;
+                        db.Order.Add(order);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 try
                 {
                     db.SaveChanges();
+                    MessageBox.Show("Импорт данных завершён");
                 }
                 catch
                 {
                     MessageBox.Show("Ошибка с переносом в бд! Попробуйте повторить перенос снова!");
                 }
                 book.Close();
-                app.Quit();
-                MessageBox.Show("Импорт данных завершён");
+                app.Quit();               
             }
         }
 
@@ -143,7 +150,7 @@ namespace Template4432
             public string ProkatTime { get; set; }
         }
 
-        private async void Import_from_JSON(object sender, RoutedEventArgs e)
+        private void Import_from_JSON(object sender, RoutedEventArgs e)
         {          
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
@@ -153,7 +160,6 @@ namespace Template4432
                 foreach (OrderJSON orders in jsonOrders)
                 {
                     Order order = new Order();
-                    order.Id = orders.Id;
                     order.Order_code = orders.CodeOrder;
                     order.Order_date = orders.CreateDate;
                     order.Order_time = orders.CreateTime;
