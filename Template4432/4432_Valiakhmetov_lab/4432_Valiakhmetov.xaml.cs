@@ -15,6 +15,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Template4432._4432_Valiakhmetov_lab;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
+using System.Text.Json;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Template4432
 {
@@ -57,9 +61,10 @@ namespace Template4432
             // заполнение массива информацией
             for (int j = 0; j < _columns; j++)
             {
-                for (int i = 1; i < _rows; i++)
+                for (int i = 0; i < _rows; i++)
                 {
-                    list[i, j] = ObjWorksheet.Cells[i + 1, j + 1].Text;                                   
+                    if (string.IsNullOrWhiteSpace(list[i,j]) && list[i,j] != "")
+                        list[i, j] = ObjWorksheet.Cells[i + 2, j + 1].Text;                                   
                 }
             }
 
@@ -73,6 +78,8 @@ namespace Template4432
             {
                 for (var i = 1; i < _rows; i++)
                 {
+                    if (list[i, 0] == "")
+                        continue;
                     var client = new Clients()
                     {
                         fio = list[i, 0],
@@ -81,8 +88,8 @@ namespace Template4432
                         index = list[i, 3],
                         city = list[i, 4],
                         street = list[i, 5],
-                        house_num = list[i, 6],
-                        flat_num = list[i, 7],
+                        house_num = Convert.ToInt32(list[i, 6]),
+                        flat_num = Convert.ToInt32(list[i, 7]),
                         mail = list[i, 8],
                     };
                     db.Clients.Add(client);
@@ -143,7 +150,7 @@ namespace Template4432
                 worksheet.Name = distinctStreets[i].Replace(" ", "");
                 worksheet.Cells[1][startRowIndex] = "Код клиента";
                 worksheet.Cells[2][startRowIndex] = "ФИО";
-                worksheet.Cells[3][startRowIndex] = "E-mail";                
+                worksheet.Cells[3][startRowIndex] = "E-mail";            
             }
 
             // теперь мы добавляем информацию от 2 клетки, т.к. на первой расположены заголовки
@@ -172,6 +179,140 @@ namespace Template4432
 
             // показываем готовую книгу Excel
             app.Visible = true;
+        }
+
+        private void btn_export_to_word_Click(object sender, RoutedEventArgs e)
+        {
+            // категории: по улице проживания. дополнительно отсортировать ФИО в алфавитном порядке. формат: код клиента | фио | email
+            // список для хранения отсортированных по ФИО данных
+            var sortedByFIO = new List<Clients>();
+            // список названий всех улиц (будущие категории)
+            var allStreetNames = new List<string>();
+
+            // заполнение списка информацией из бд
+            using (ClientsExcelDB db = new ClientsExcelDB())
+            {
+                sortedByFIO = db.Clients.ToList().OrderBy(f => f.fio).ToList();
+            }
+
+            // убираем все пустые строчки
+            sortedByFIO.RemoveAll(s => string.IsNullOrWhiteSpace(s.fio));
+
+            // заполняем список названий всех улиц
+            foreach (var item in sortedByFIO)
+            {
+                if (item.street != null && item.street != "")
+                {
+                    allStreetNames.Add(item.street);
+                }
+            }
+
+            // формируем список уникальных значений
+            var distinctStreets = allStreetNames.Distinct().ToList();
+
+            // создание документа Word
+            var app = new Word.Application();
+            var document = app.Documents.Add();
+            var index = 0;
+
+            // создание параграфов
+            for (int i = 0; i < distinctStreets.Count; i++)
+            {
+                int rowsCounter = 0;        
+
+                foreach (var client in sortedByFIO)
+                {
+                    if (client.street.Replace(" ", "") == distinctStreets[index].Replace(" ",""))
+                        rowsCounter++;
+                }
+
+                var paragraph = document.Paragraphs.Add();
+                var range = paragraph.Range;
+                range.Text = distinctStreets[index];
+                paragraph.set_Style("Заголовок 1");
+                range.InsertParagraphAfter();
+                var tableParagraph = document.Paragraphs.Add();
+                var tableRange = tableParagraph.Range;
+                var streetCategories = document.Tables.Add(tableRange, rowsCounter + 1, 3);
+
+                streetCategories.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                streetCategories.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleDot;
+                streetCategories.Range.Cells.VerticalAlignment = (Word.WdCellVerticalAlignment)Word.WdVerticalAlignment.wdAlignVerticalCenter;
+
+                Word.Range cellRange;
+                cellRange = streetCategories.Cell(1, 1).Range;
+                cellRange.Text = "Код клиента";
+                cellRange = streetCategories.Cell(1, 2).Range;
+                cellRange.Text = "ФИО";
+                cellRange = streetCategories.Cell(1, 3).Range;
+                cellRange.Text = "E-mail";
+
+                streetCategories.Rows[1].Range.Bold = 1;
+                streetCategories.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                var count = 1;
+                
+                foreach (var item in sortedByFIO)
+                {
+                    if (item.street == distinctStreets[index])
+                    {
+                        cellRange = streetCategories.Cell(count + 1, 1).Range;
+                        cellRange.Text = item.client_code;
+                        //cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = streetCategories.Cell(count + 1, 2).Range;
+                        cellRange.Text = item.fio;
+                        cellRange = streetCategories.Cell(count + 1, 3).Range;
+                        cellRange.Text = item.mail;
+
+                        count++;
+                    }
+                }
+
+                index++;
+            }                        
+
+            // показываем готовую книгу Excel
+            app.Visible = true;
+        }
+
+        private async void btn_import_from_json_Click(object sender, RoutedEventArgs e)
+        {
+            string path = "C:\\Users\\valia\\Source\\Repos\\LR1_Valiakhmetov_Task2_4432\\Template4432\\4432_Valiakhmetov_lab\\data.json";
+
+            using (var fileStream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                using (var db = new ClientsExcelDB())
+                {
+                    var clients = await JsonSerializer.DeserializeAsync<List<Clients>>(fileStream);
+
+                    foreach (var item in clients)
+                    {
+                        var client = new Clients();
+
+                        client.client_id = item.client_id;
+                        client.fio = item.fio;
+                        client.client_code = item.client_code;
+                        client.birthday = item.birthday;
+                        client.index = item.index;
+                        client.city = item.city;
+                        client.street = item.street;
+                        client.house_num = item.house_num;
+                        client.flat_num = item.flat_num;
+                        client.mail = item.mail;
+
+                        db.Clients.Add(client);
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        MessageBox.Show("Данные импортированы успешно!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
     }
 }

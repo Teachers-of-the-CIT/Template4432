@@ -15,8 +15,8 @@
           <Property Name="index" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="street" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="house_num" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="flat_num" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="house_num" Type="int" />
+          <Property Name="flat_num" Type="int" />
           <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
@@ -37,8 +37,8 @@
           <Property Name="index" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="house_num" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
-          <Property Name="flat_num" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="house_num" Type="Int32" />
+          <Property Name="flat_num" Type="Int32" />
           <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>

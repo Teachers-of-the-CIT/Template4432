@@ -27,5 +27,8 @@
         
         <Button Grid.Row="2" Content="Импорт данных" x:Name="btn_import_from_excel" Click="btn_import_from_excel_Click"></Button>
         <Button Grid.Row="2" Content="Экспорт в Excel" Grid.Column="1" x:Name="btn_export_to_excel" Click="btn_export_to_excel_Click"></Button>
+
+        <Button Grid.Row="1" Content="Импорт JSON данных" x:Name="btn_import_from_json" Click="btn_import_from_json_Click"></Button>
+        <Button Grid.Row="1" Content="Экспорт в Word" Grid.Column="1" x:Name="btn_export_to_word" Click="btn_export_to_word_Click"></Button>
     </Grid>
 </Window>

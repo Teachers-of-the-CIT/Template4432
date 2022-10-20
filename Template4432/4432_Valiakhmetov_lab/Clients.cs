@@ -11,17 +11,27 @@ namespace Template4432._4432_Valiakhmetov_lab
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text.Json.Serialization;
+
     public partial class Clients
     {
+        [JsonPropertyName("FullName")]
         public string fio { get; set; }
+        [JsonPropertyName("CodeClient")]
         public string client_code { get; set; }
+        [JsonPropertyName("BirthDate")]
         public string birthday { get; set; }
+        [JsonPropertyName("Index")]
         public string index { get; set; }
+        [JsonPropertyName("City")]
         public string city { get; set; }
+        [JsonPropertyName("Street")]
         public string street { get; set; }
-        public string house_num { get; set; }
-        public string flat_num { get; set; }
+        [JsonPropertyName("Home")]
+        public Nullable<int> house_num { get; set; }
+        [JsonPropertyName("Kvartira")]
+        public Nullable<int> flat_num { get; set; }
+        [JsonPropertyName("E_mail")]
         public string mail { get; set; }
         public int client_id { get; set; }
     }
