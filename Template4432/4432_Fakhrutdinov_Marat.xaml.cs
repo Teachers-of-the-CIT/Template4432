@@ -20,6 +20,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Text.Json;
 using System.Drawing;
+using System.Globalization;
 
 namespace Template4432
 {
@@ -49,43 +50,68 @@ namespace Template4432
             public string Services1;
         }
 
+        List<MonthExistng> MonthExistngList = new List<MonthExistng>();
+        public class MonthExistng
+        {
+            public string MonthName;
+            public bool IsExist;
+            public int QuantityOfOrders;
+        }
+
+        public string[] monthNames = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+
         private void export_to_excel(object sender, RoutedEventArgs e)
         {
-            var app = new Excel.Application();
-            var book = app.Workbooks.Add(Type.Missing);
-            app.SheetsInNewWorkbook = 1;
-            var sheet1 = app.Worksheets.Item[1];
-            sheet1.Name = "Отсортированные заказы по дате";
-            sheet1.Cells[1][1] = "Id";
-            sheet1.Cells[2][1] = "Код заказа";
-            sheet1.Cells[3][1] = "Код клиента";
-            sheet1.Cells[4][1] = "Услуги";
-            string FullDate = null;
-
-            foreach (Order order in db.Order)
+            try
             {
-                FullDate = order.Order_date + " " + order.Order_time;
-                DateTime dateTime = Convert.ToDateTime(FullDate);
-                ForOrderList forOrderList = new ForOrderList();
-                forOrderList.Id = order.Id;
-                forOrderList.dateTime1 = dateTime;
-                forOrderList.Order_code1 = order.Order_code;
-                forOrderList.Client_code1 = order.Client_code;
-                forOrderList.Services1 = order.Services;
-                OrderListSmall.Add(forOrderList);
-            }
-            OrderListSmall = OrderListSmall.ToList().OrderBy(p => p.dateTime1).ToList();
+                var app = new Excel.Application();
+                var book = app.Workbooks.Add(Type.Missing);
+                app.SheetsInNewWorkbook = 12;
+                Excel.Worksheet sheet = app.Worksheets[1];
+                string FullDate = null;
 
-            int startRowIndex = 2;
-            foreach (ForOrderList forOrderList1 in OrderListSmall)
-            {
-                sheet1.Cells[1][startRowIndex] = forOrderList1.Id;
-                sheet1.Cells[2][startRowIndex] = forOrderList1.Order_code1;
-                sheet1.Cells[3][startRowIndex] = forOrderList1.Client_code1;
-                sheet1.Cells[4][startRowIndex] = forOrderList1.Services1;
-                startRowIndex++;
+                foreach (Order order in db.Order)
+                {
+                    FullDate = order.Order_date + " " + order.Order_time;
+                    DateTime dateTime = Convert.ToDateTime(FullDate);
+                    ForOrderList forOrderList = new ForOrderList();
+                    forOrderList.Id = order.Id;
+                    forOrderList.dateTime1 = dateTime;
+                    forOrderList.Order_code1 = order.Order_code;
+                    forOrderList.Client_code1 = order.Client_code;
+                    forOrderList.Services1 = order.Services;
+                    OrderListSmall.Add(forOrderList);
+                }
+
+                OrderListSmall = OrderListSmall.ToList().OrderBy(p => p.dateTime1).ToList();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    sheet = app.Worksheets[(i + 1)];
+                    sheet.Name = monthNames[i];
+                    sheet.Cells[1][1] = "Id";
+                    sheet.Cells[2][1] = "Код заказа";
+                    sheet.Cells[3][1] = "Код клиента";
+                    sheet.Cells[4][1] = "Услуги";
+                    int startRowIndex = 2;
+                    foreach (ForOrderList forOrderList1 in OrderListSmall)
+                    {
+                        if (monthNames[i] == forOrderList1.dateTime1.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU")))
+                        {
+                            sheet.Cells[1][startRowIndex] = forOrderList1.Id;
+                            sheet.Cells[2][startRowIndex] = forOrderList1.Order_code1;
+                            sheet.Cells[3][startRowIndex] = forOrderList1.Client_code1;
+                            sheet.Cells[4][startRowIndex] = forOrderList1.Services1;
+                            startRowIndex++;
+                        }
+                    }
+                }
+                app.Visible = true;
             }
-            app.Visible = true;
+            catch
+            {
+                MessageBox.Show("Произошла ошибка! Повторите позже.");
+            }
         }
 
         private void Import_Data(object sender, RoutedEventArgs e)
@@ -133,7 +159,7 @@ namespace Template4432
                     MessageBox.Show("Ошибка с переносом в бд! Попробуйте повторить перенос снова!");
                 }
                 book.Close();
-                app.Quit();               
+                app.Quit();
             }
         }
 
@@ -151,10 +177,10 @@ namespace Template4432
         }
 
         private void Import_from_JSON(object sender, RoutedEventArgs e)
-        {          
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
-            {               
+            {
                 FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
                 List<OrderJSON> jsonOrders = JsonSerializer.Deserialize<List<OrderJSON>>(fs);
                 foreach (OrderJSON orders in jsonOrders)
@@ -178,80 +204,122 @@ namespace Template4432
                 catch
                 {
                     MessageBox.Show("Ошибка с переносом в бд! Попробуйте повторить перенос снова!");
-                }               
+                }
             }
         }
 
         private void export_to_word(object sender, RoutedEventArgs e)
         {
-            var app = new Word.Application();
-            Word.Document doc = app.Documents.Add();
-            Word.Paragraph paragraph = doc.Paragraphs.Add();
-            Word.Range range = paragraph.Range;
-            paragraph.set_Style("Заголовок 1");
-            range.Text = "ОТСОРТИРОВАННЫЕ ЗАКАЗЫ ПО ДАТЕ СОЗДАНИЯ";
-            range.Font.Size = 20;
-            range.Font.Name = "Times New Roman";
-            range.Font.Color = Word.WdColor.wdColorBlack;
-            range.Font.Bold = 2;
-            paragraph.Alignment = (WdParagraphAlignment)StringAlignment.Center;
-            range.InsertParagraphAfter();
-            string FullDate = null;
-
-            foreach (Order order in db.Order)
+            try
             {
-                FullDate = order.Order_date + " " + order.Order_time;
-                DateTime dateTime = Convert.ToDateTime(FullDate);
-                ForOrderList forOrderList = new ForOrderList();
-                forOrderList.Id = order.Id;
-                forOrderList.dateTime1 = dateTime;
-                forOrderList.Order_code1 = order.Order_code;
-                forOrderList.Client_code1 = order.Client_code;
-                forOrderList.Services1 = order.Services;
-                OrderListSmall.Add(forOrderList);
+                var app = new Word.Application();
+                Word.Document doc = app.Documents.Add();
+                string FullDate = null;
+
+                foreach (String existMonth in monthNames)
+                {
+                    MonthExistng monthList = new MonthExistng();
+                    monthList.MonthName = existMonth;
+                    monthList.IsExist = false;
+                    MonthExistngList.Add(monthList);
+                }
+
+                foreach (Order order in db.Order)
+                {
+                    FullDate = order.Order_date + " " + order.Order_time;
+                    DateTime dateTime = Convert.ToDateTime(FullDate);
+                    ForOrderList forOrderList = new ForOrderList();
+                    forOrderList.Id = order.Id;
+                    forOrderList.dateTime1 = dateTime;
+                    forOrderList.Order_code1 = order.Order_code;
+                    forOrderList.Client_code1 = order.Client_code;
+                    forOrderList.Services1 = order.Services;
+                    OrderListSmall.Add(forOrderList);
+                    foreach (MonthExistng monthList in MonthExistngList)
+                    {
+                        if (dateTime.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU")) == monthList.MonthName)
+                        {
+                            monthList.IsExist = true;
+                            monthList.QuantityOfOrders++;
+                        }
+                    }
+                }
+
+                OrderListSmall = OrderListSmall.ToList().OrderBy(p => p.dateTime1).ToList();
+
+                for (int j = 0; j < 12; j++)
+                {
+                    foreach (MonthExistng monthList in MonthExistngList)
+                    {
+                        if (monthList.IsExist == true && monthList.MonthName == monthNames[j])
+                        {
+                            Word.Paragraph paragraph = doc.Paragraphs.Add();
+                            Word.Range range = paragraph.Range;
+                            paragraph.set_Style("Заголовок 1");
+                            range.Text = monthNames[j].ToUpper();
+                            range.Font.Size = 20;
+                            range.Font.Name = "Times New Roman";
+                            range.Font.Color = Word.WdColor.wdColorBlack;
+                            range.Font.Bold = 2;
+                            paragraph.Alignment = (WdParagraphAlignment)StringAlignment.Center;
+                            range.InsertParagraphAfter();
+
+                            Word.Paragraph table = doc.Paragraphs.Add();
+                            Word.Range tablerange = table.Range;
+                            Word.Table employeetable = doc.Tables.Add(tablerange, monthList.QuantityOfOrders + 1, 4);
+                            employeetable.Borders.InsideLineStyle = employeetable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                            employeetable.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                            Word.Range cellRange;
+                            cellRange = employeetable.Cell(1, 1).Range;
+                            cellRange.Text = "Id";
+                            cellRange = employeetable.Cell(1, 2).Range;
+                            cellRange.Text = "Код заказа";
+                            cellRange = employeetable.Cell(1, 3).Range;
+                            cellRange.Text = "Код клиента";
+                            cellRange = employeetable.Cell(1, 4).Range;
+                            cellRange.Text = "Услуги";
+                            employeetable.Rows[1].Range.Bold = 1;
+                            employeetable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            //Заполнение
+                            int i = 1;
+                            foreach (ForOrderList forOrderList1 in OrderListSmall)
+                            {
+                                if (forOrderList1.dateTime1.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU")) == monthList.MonthName)
+                                {
+                                    cellRange = employeetable.Cell(i + 1, 1).Range;
+                                    cellRange.Text = forOrderList1.Id.ToString();
+                                    cellRange.ParagraphFormat.Alignment =
+                                    Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                    cellRange = employeetable.Cell(i + 1, 2).Range;
+                                    cellRange.Text = forOrderList1.Order_code1;
+                                    cellRange.ParagraphFormat.Alignment =
+                                    Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                    cellRange = employeetable.Cell(i + 1, 3).Range;
+                                    cellRange.Text = forOrderList1.Client_code1;
+                                    cellRange.ParagraphFormat.Alignment =
+                                    Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                    cellRange = employeetable.Cell(i + 1, 4).Range;
+                                    cellRange.Text = forOrderList1.Services1;
+                                    cellRange.ParagraphFormat.Alignment =
+                                    Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                    i++;
+                                }
+                            }
+                            Word.Paragraph paragraph1 = doc.Paragraphs.Add();
+                            Word.Range range1 = paragraph.Range;
+                            range1.InsertBreak(Microsoft.Office.Interop.Word.WdBreakType.wdPageBreak);
+                        }
+                    }
+                }
+                app.Visible = true;
             }
-            OrderListSmall = OrderListSmall.ToList().OrderBy(p => p.dateTime1).ToList();
 
-            Word.Paragraph table = doc.Paragraphs.Add();
-            Word.Range tablerange = table.Range;
-            Word.Table employeetable = doc.Tables.Add(tablerange, OrderListSmall.Count + 1, 4);
-            employeetable.Borders.InsideLineStyle = employeetable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-            employeetable.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-
-            Word.Range cellRange;
-            cellRange = employeetable.Cell(1, 1).Range;
-            cellRange.Text = "Id";
-            cellRange = employeetable.Cell(1, 2).Range;
-            cellRange.Text = "Код заказа";
-            cellRange = employeetable.Cell(1, 3).Range;
-            cellRange.Text = "Код клиента";
-            cellRange = employeetable.Cell(1, 4).Range;
-            cellRange.Text = "Услуги";
-            employeetable.Rows[1].Range.Bold = 1;
-            employeetable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-            //Заполнение
-            int i = 1;
-            foreach (ForOrderList forOrderList1 in OrderListSmall)
+            catch
             {
-                cellRange = employeetable.Cell(i + 1, 1).Range;
-                cellRange.Text = forOrderList1.Id.ToString();
-                cellRange.ParagraphFormat.Alignment =
-                Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                cellRange = employeetable.Cell(i + 1, 2).Range;
-                cellRange.Text = forOrderList1.Order_code1;
-                cellRange.ParagraphFormat.Alignment =
-                Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                cellRange = employeetable.Cell(i + 1, 3).Range;
-                cellRange.Text = forOrderList1.Client_code1;
-                cellRange.ParagraphFormat.Alignment =
-                Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                cellRange = employeetable.Cell(i + 1, 4).Range;
-                cellRange.Text = forOrderList1.Services1;
-                cellRange.ParagraphFormat.Alignment =
-                Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                i++;
+                MessageBox.Show("Произошла ошибка! Повторите позже.");
             }
-            app.Visible = true;
         }
     }
 }
+
