@@ -112,9 +112,27 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BastanovModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BastanovModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BastanovModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BastanovModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BastanovModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BastanovModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Prokat_Bastanov.cs">
+      <DependentUpon>BastanovModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services.cs">
       <DependentUpon>ServicesModel.tt</DependentUpon>
@@ -244,6 +262,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="BastanovModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BastanovModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="BastanovModel.edmx.diagram">
+      <DependentUpon>BastanovModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -294,6 +319,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BastanovModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BastanovModel.edmx</DependentUpon>
+      <LastGenOutput>BastanovModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BastanovModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BastanovModel.edmx</DependentUpon>
+      <LastGenOutput>BastanovModel.cs</LastGenOutput>
+    </Content>
     <Content Include="ServicesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ServicesModel.Context.cs</LastGenOutput>

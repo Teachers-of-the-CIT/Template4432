@@ -8,5 +8,7 @@
         Title="_4432_Bastanov" Height="450" Width="800">
     <Grid>
         <TextBlock TextAlignment="Center" Height="40" FontSize="20">Айрат 18 лет</TextBlock>
+        <Button x:Name="Exp" Click="Exp_Click" Margin="66,230,623,136" Width="105">Экспорт в Excel</Button>
+        <Button x:Name="Imp" Click="Imp_Click" Margin="493,230,196,136" Width="105">Импорт данных</Button>
     </Grid>
 </Window>
