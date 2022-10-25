@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Template4432"
         mc:Ignorable="d"
         Title="_4432_Naumkina" Height="200" Width="300">
-    <DockPanel>
-        <TextBlock TextAlignment="Center" Height="40" FontSize="20">Сабина 18 лет</TextBlock>
-    </DockPanel>
+    <StackPanel>
+        <TextBlock TextAlignment="Center" FontSize="20" Margin="20">Сабина 18 лет</TextBlock>
+        <Button Width="150" Margin="10" Click="Button_Click">Импорт данных</Button>
+        <Button Width="150" Click="Button_Click_1">Экспорт в Excel</Button>
+    </StackPanel>
 </Window>
