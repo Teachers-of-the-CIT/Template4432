@@ -15,7 +15,7 @@
             <Button x:Name="BtnImport" Click="Button_Click" FontFamily="Segoe UI Black" FontSize="20">Импорт данных</Button>
         </Grid>
         <Grid Grid.Row="1">
-            <Button x:Name="BtnExport" FontFamily="Segoe UI Black" FontSize="20">Экспорт в Excel</Button>
+            <Button x:Name="BtnExport" FontFamily="Segoe UI Black" FontSize="20" Click="BtnExport_Click">Экспорт в Excel</Button>
         </Grid>
     </Grid>
 </Window>

@@ -15,13 +15,13 @@ namespace Template4432
     public partial class Zakaz
     {
         public int ID { get; set; }
-        public int Kod_zakaza { get; set; }
-        public System.DateTime Data_zakaza { get; set; }
-        public System.TimeSpan Vremya { get; set; }
-        public int Kod_klienta { get; set; }
+        public string Kod_zakaza { get; set; }
+        public string Data_zakaza { get; set; }
+        public string Vremya { get; set; }
+        public string Kod_klienta { get; set; }
         public string Uslugi { get; set; }
         public string Status { get; set; }
-        public System.DateTime Data_zakriritiya { get; set; }
+        public string Data_zakriritiya { get; set; }
         public string Vremya_prokata { get; set; }
     }
 }
