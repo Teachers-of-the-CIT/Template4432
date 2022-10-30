@@ -13,8 +13,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.IO;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using Word = Microsoft.Office.Interop.Word;
 
 using Excel = Microsoft.Office.Interop.Excel;
+
+
 namespace Template4432
 {
     /// <summary>
@@ -27,114 +34,100 @@ namespace Template4432
             InitializeComponent();
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog()
             {
-                DefaultExt = "*.xls;*.xlsx",
-                Filter = "файл Excel (2.xlsx)|*.xlsx",
-                Title = "Выберите файл БД"
+                DefaultExt = "*.json",
+                Filter = "Файл Json (*.json)|*.json|Text files (*.txt)|*.txt",
+                Title = "Выберите файл"
             };
             if (!(ofd.ShowDialog() == true))
                 return;
+            FileStream fs = File.OpenRead(ofd.FileName);
+            List<Zakaz> zakazi;
+            zakazi = JsonSerializer.Deserialize<List<Zakaz>>(fs);
 
-            string[,] list;
-            Excel.Application objWorkExcel = new Excel.Application();
-            Excel.Workbook objWorkBook = objWorkExcel.Workbooks.Open(ofd.FileName);
-            Excel.Worksheet objWorkSheet = (Excel.Worksheet)objWorkBook.Sheets[1];
-            var lastCell = objWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);
-            int _columns = (int)lastCell.Column;
-            int _rows = (int)lastCell.Row;
-            list = new string[_rows, _columns];
-            for (int j = 0; j < _columns; j++)
+            using (ISRPOEntities3 ie3 = new ISRPOEntities3())
             {
-                for (int i = 0; i < _rows; i++)
+                foreach (var a in zakazi)
                 {
-                    list[i, j] = objWorkSheet.Cells[i + 1, j + 1].Text;
+                    ie3.Zakaz.Add(a);
                 }
+                ie3.SaveChanges();
+            }
 
-            }
-            objWorkBook.Close(false, Type.Missing, Type.Missing);
-            objWorkExcel.Quit();
-            GC.Collect();
-            using (ISRPOEntities2 iSRPOEntities = new ISRPOEntities2())
-            {
-                for (int i = 0; i < _rows; i++)
-                {
-                    int nullColumn = 0;
-                    for (int j = 0; j < _columns; j++)
-                    {
-                        if (String.IsNullOrEmpty(list[i, j]))
-                        {
-                            nullColumn++;
-                        }
-                    }
-                    if (nullColumn == _columns)
-                    {
-                        continue;
-                    }
-                    iSRPOEntities.Zakaz.Add(new Zakaz()
-                    {
-                        Kod_zakaza = list[i, 1],
-                        Data_zakaza = list[i, 2],
-                        Vremya = list[i, 3],
-                        Kod_klienta = list[i, 4],
-                        Uslugi = list[i, 5],
-                        Status = list[i, 6],
-                        Data_zakriritiya = list[i, 7],
-                        Vremya_prokata = list[i, 8]
-                    });
-                }
-                iSRPOEntities.SaveChanges();
-            }
-            
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            List<Zakaz> zakaz;
-            using (ISRPOEntities2 iSRPOEntities2 = new ISRPOEntities2())
+            List<Zakaz> zakazes;
+            using (ISRPOEntities3 ie3 = new ISRPOEntities3())
             {
-                zakaz = iSRPOEntities2.Zakaz.ToList().OrderBy(s => s.Data_zakaza).ToList();
-            }
-            var app = new Excel.Application();
-            app.SheetsInNewWorkbook = zakaz.Count();
-            Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
-            var vivod = zakaz
-                        .OrderBy(o => o.Data_zakaza)
-                        .GroupBy(s => s.Data_zakaza)
-                        .ToDictionary(g => g.Key, g => g.Select(s => new { s.ID, s.Kod_zakaza, s.Kod_klienta, s.Uslugi, s.Data_zakaza })
-                        .ToArray());
-            for (int i = 0; i < zakaz.Count; i++)
-            {
-                int startRowIndex = 1;
-                Excel.Worksheet worksheet = (Excel.Worksheet)app.Worksheets.Item[i + 1];
-                worksheet.Name =
-                $"Статус {i + 1}";
-                worksheet.Cells[1][startRowIndex] = "Id";
-                worksheet.Cells[2][startRowIndex] = "Код заказа";
-                worksheet.Cells[3][startRowIndex] = "Код клиента";
-                worksheet.Cells[4][startRowIndex] = "Услуги";
-                startRowIndex++;
-                var data = i == 0 ? vivod.Where(w => w.Key.Equals("12.03.2022"))
-                : i == 1 ? vivod.Where(w => w.Key.Equals("21.03.2022")) : i == 2 ? vivod.Where(w => w.Key.Equals("09.04.2022")) : vivod;
-                foreach (var Data_zakaza in data)
+                zakazes = ie3.Zakaz.ToList().OrderBy(g => g.Data_zakaza).ToList();
+                var group = zakazes
+                        .GroupBy(s => s.Data_zakaza);
+
+                var app = new Word.Application();
+                Word.Document document = app.Documents.Add();
+
+                int i = 0;
+                foreach (var data in group)
                 {
-                    foreach (var DZ in Data_zakaza.Value)
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+                    range.Text = $"Дата заказа {i + 1}";
+                    paragraph.set_Style("История заказа 1");
+                    range.InsertParagraphAfter();
+                    Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                    Word.Range tableRange = tableParagraph.Range;
+                    Word.Table newTable = document.Tables.Add(tableRange, data.Count() + 1, 4);
+                    newTable.Borders.InsideLineStyle = newTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    newTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                    Word.Range cellRange;
+                    cellRange = newTable.Cell(1, 1).Range;
+                    cellRange.Text = "Id";
+                    cellRange = newTable.Cell(1, 2).Range;
+                    cellRange.Text = "Код заказа";
+                    cellRange = newTable.Cell(1, 3).Range;
+                    cellRange.Text = "Код клиента";
+                    cellRange = newTable.Cell(1, 4).Range;
+                    cellRange.Text = "Услуги";
+                    newTable.Rows[1].Range.Bold = 1;
+                    newTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    int k = 1;
+                    foreach (var vivod in data)
                     {
-                        if (DZ.Data_zakaza == Data_zakaza.Key)
-                        {
-                            worksheet.Cells[1][startRowIndex] = DZ.ID;
-                            worksheet.Cells[2][startRowIndex] = DZ.Kod_zakaza;
-                            worksheet.Cells[3][startRowIndex] = DZ.Kod_klienta;
-                            worksheet.Cells[4][startRowIndex] = DZ.Uslugi;
-                            startRowIndex++;
-                        }
+                        cellRange = newTable.Cell(k + 1, 1).Range;
+                        cellRange.Text = Convert.ToString(vivod.ID);
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = newTable.Cell(k + 1, 2).Range;
+                        cellRange.Text = vivod.Kod_zakaza;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = newTable.Cell(k + 1, 3).Range;
+                        cellRange.Text = vivod.Kod_klienta;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = newTable.Cell(k + 1, 4).Range;
+                        cellRange.Text = vivod.Uslugi;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        k++;
                     }
+
+                    Word.Paragraph newParagraph = document.Paragraphs.Add();
+                    Word.Range countEmployeeRange = newParagraph.Range;
+                    countEmployeeRange.Font.Color = Word.WdColor.wdColorBlue;
+                    countEmployeeRange.InsertParagraphAfter();
+
+                    document.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
+                    app.Visible = true;
+                    document.SaveAs2(@"C:\Users\Латыповлар\LatypovaLR3.docx");
+                    document.SaveAs2(@"C:\Users\Латыповлар\LatypovaLR3.pdf", Word.WdExportFormat.wdExportFormatPDF);
+                    i++;
                 }
-                worksheet.Columns.AutoFit();
             }
-            app.Visible = true;
         }
     }
     
