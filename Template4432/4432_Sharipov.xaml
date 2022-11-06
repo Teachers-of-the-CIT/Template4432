@@ -10,7 +10,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Foreground="Green" TextAlignment="Center" VerticalAlignment="Center" FontSize="50">Шарипов Булат 13 лет</TextBlock>
+        <StackPanel Grid.Row="1">
+            <Button x:Name="btnImport" Height="30" Width="150" Click="btnImport_Click">Импорт данных</Button>
+            <Button x:Name="btnExport" Height="30" Width="150" Click="btnExport_Click">Экспорт в Excel</Button>
+        </StackPanel>
     </Grid>
 </Window>
