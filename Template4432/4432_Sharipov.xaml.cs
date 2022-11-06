@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Office.Interop;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
+using System.IO;
+using System.Text.Json;
 
 namespace Template4432
 {
@@ -22,6 +25,16 @@ namespace Template4432
     /// </summary>
     public partial class _4432_Sharipov : Window
     {
+        private class OrderDTO
+        {
+            public int Id { get; set; }
+            public string CodeOrder { get; set; }
+            public string CreateDate { get; set; }
+            public string CodeClient { get; set; }
+            public string Services { get; set; }
+            public string ProkatTime { get; set; }
+        }
+
         private Excel.Application _excel;
         public _4432_Sharipov()
         {
@@ -136,6 +149,136 @@ namespace Template4432
             }
             _excel.Visible = true;
 
+        }
+
+        private void btnImportJson_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "Выберите файл базы данных"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+
+            List<OrderDTO> orders;
+            using (var fs = new FileStream(ofd.FileName, FileMode.Open))
+            {
+                orders = JsonSerializer.Deserialize<List<OrderDTO>>(fs);
+            }
+
+            using (var db = new ISRPO2Entities())
+            {
+                foreach (var order in orders)
+                {
+                    db.Order.Add(new Order()
+                    {
+                        Id = order.Id,
+                        OrderCode = order.CodeOrder,
+                        CreationDate = DateTime.Parse(order.CreateDate),
+                        Services = order.Services,
+                        RentalTime = order.ProkatTime,
+                        ClientCode = int.Parse(order.CodeClient),
+                    });
+                }
+                db.SaveChanges();
+            }
+            MessageBox.Show("Данные успешно импортированы");
+        }
+
+        private void btnExportWord_Click(object sender, RoutedEventArgs e)
+        {            
+            List<IGrouping<string, Order>> ordersByRentalTime;
+
+            using (var db = new ISRPO2Entities())
+            {
+                ordersByRentalTime = db.Order.GroupBy(order => order.RentalTime).ToList();
+            }
+
+            var word = new Word.Application();
+            var document = word.Documents.Add();
+
+            using (var db = new ISRPO2Entities())
+            {
+                ordersByRentalTime = db.Order.GroupBy(order => order.RentalTime).ToList();
+            }
+
+            foreach (var rentalTime in ordersByRentalTime)
+            {
+                var orders = rentalTime.ToList();
+                var paragraph = document.Paragraphs.Add();
+                paragraph.set_Style("Заголовок 1");
+
+                var range = paragraph.Range;
+                range.Text = rentalTime.Key.ToString();
+
+                range.InsertParagraphAfter();
+
+                #region Таблица
+                var tableParagraph = document.Paragraphs.Add();
+                var tableRange = tableParagraph.Range;
+
+                var ordersTable = document.Tables.Add(tableRange, orders.Count(), 5);
+                ordersTable.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                ordersTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+
+                ordersTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                #region Заголовок таблицы
+                ordersTable.Rows[1].Range.Bold = 1;
+                ordersTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                ordersTable.Cell(1, 1).Range.Text = "Id";
+                ordersTable.Cell(1, 2).Range.Text = "Код заказа";
+                ordersTable.Cell(1, 3).Range.Text = "Дата создания";
+                ordersTable.Cell(1, 4).Range.Text = "Код клиента";
+                ordersTable.Cell(1, 5).Range.Text = "Услуги";
+                #endregion
+
+                #region Заполнение таблицы
+                var row = 2;
+                foreach (var order in orders)
+                {
+                    ordersTable.Cell(row, 1).Range.Text = order.Id.ToString();
+                    ordersTable.Cell(row, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 2).Range.Text = order.OrderCode.ToString();
+                    ordersTable.Cell(row, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 3).Range.Text = order.CreationDate.Date.ToString();
+                    ordersTable.Cell(row, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 4).Range.Text = order.ClientCode.ToString();
+                    ordersTable.Cell(row, 4).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 5).Range.Text = order.Services.ToString();
+                    ordersTable.Cell(row, 5).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    row++;
+                }
+                #endregion
+                #endregion
+
+                #region Дополнительная информация
+                #region Дата первого заказа
+                var firstOrderDate = document.Paragraphs.Add();
+                firstOrderDate.Range.Text = $"Дата первого заказа - {orders.First().CreationDate.Date}";
+                firstOrderDate.Range.InsertParagraphAfter();
+                #endregion
+
+                #region Дата последнего заказа
+                var lastOrderDate = document.Paragraphs.Add();
+                lastOrderDate.Range.Text = $"Дата первого заказа - {orders.Last().CreationDate.Date}";
+                lastOrderDate.Range.InsertParagraphAfter();
+                #endregion
+
+                #endregion
+
+                document.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+            }
+
+            word.Visible = true;
         }
     }
 }
