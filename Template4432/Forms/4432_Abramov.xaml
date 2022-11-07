@@ -17,8 +17,10 @@
         <Label Grid.Row="1">Возраст: 32</Label>
         <Label Grid.Row="2">Двигатель: МС2 (165 л.с., рабочий объем: 2.23 л., степень сжатия: 8.4, октановое число бензина: 95, диаметр цилиндров: 81 мм)</Label>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="ExportForExcelButton" Margin="10" Width="250" Click="ExportForExcelButton_OnClick">Экспорт в Excel</Button>
-            <Button x:Name="ImportButton" Margin="10" Width="250" Click="ImportButton_OnClick">Импорт данных</Button>
+            <Button x:Name="ExportForExcelButton" Margin="10" Width="100" Click="ExportForExcelButton_OnClick">Экспорт в Excel</Button>
+            <Button x:Name="ImportFromExcelButton" Margin="10" Width="150" Click="ImportButton_OnClick">Импорт данных из Excel-файла</Button>
+            <Button x:Name="ImportFromJson" Margin="10" Width="150" Click="ImportFromJson_OnClick">Импорт данных из Json-файла</Button>
+            <Button x:Name="ExportToWordButton" Margin="10" Width="150" Click="ExportToWordButton_OnClick">Экспорт данных в Word</Button>
         </StackPanel>
     </Grid>
 </Window>

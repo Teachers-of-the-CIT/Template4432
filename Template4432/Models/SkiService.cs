@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Template4432.Enums;
 using Template4432.Models.Base;
 
@@ -6,10 +7,19 @@ namespace Template4432.Models
 {
     public class SkiService : Entity
     {
+        [JsonProperty("IdServices")]
+        public override int Id { get; set; }
+
+        [JsonProperty("NameServices")]
         public string ServiceName { get; set; }
+        
+        [JsonProperty("CodeService")]
         public string ServiceCode { get; set; }
         
+        [JsonProperty("TypeOfService")]
         public SkiServiceType ServiceType { get; set; }
+        
+        [JsonProperty("Cost")]
         public decimal PriceForHour { get; set; }
         
         public SkiService() { }

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Word;
+using Newtonsoft.Json;
 using Template4432.Application.Base;
 using Template4432.Contexts;
 using Template4432.Enums;
 using Template4432.Interfaces;
 using Template4432.Models;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Template4432.Application
 {
-    public class SkiServiceService : EntityService<SkiService>, IExcelDataService<SkiService>
+    public class SkiServiceService : EntityService<SkiService>, IExcelDataService, IJsonDataService, IWordDataService
     {
         private readonly ExcelApplication _excel;
 
@@ -83,18 +87,7 @@ namespace Template4432.Application
                 }
             }
 
-            try
-            {
-                _dbSet.AddRange(skiServices);
-
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return (false, 0);
-            }
-
-            return (true, skiServices.Count);
+            return AddToDatabase(skiServices);
         }
 
         public Workbook ExportEntities()
@@ -135,6 +128,96 @@ namespace Template4432.Application
             _excel.Visible = true;
 
             return workbook;
+        }
+
+        private (bool, int) AddToDatabase(List<SkiService> services)
+        {
+            try
+            {
+                _dbSet.AddRange(services);
+
+                _context.SaveChanges();
+
+                return (true, services.Count);
+            }
+            catch
+            {
+                return (false, 0);
+            }
+        }
+        
+        public (bool, int) ImportJsonData(string json)
+        {
+            SkiService[] skiServices = JsonConvert.DeserializeObject<SkiService[]>(json);
+
+            return AddToDatabase(skiServices?.ToList());
+        }
+
+        public Document ExportToWord()
+        {
+            List<IGrouping<SkiServiceType, SkiService>> skiServicesGrouped = ReadAsQueryable()
+                .OrderBy(service => service.PriceForHour)
+                .GroupBy(service => service.ServiceType)
+                .ToList();
+
+            Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
+            Document document = word.Documents.Add();
+            
+            foreach (IGrouping<SkiServiceType, SkiService> skiServiceByType in skiServicesGrouped)
+            {
+                List<SkiService> skiServices = skiServiceByType.ToList();
+                
+                Paragraph paragraph = document.Paragraphs.Add();
+                paragraph.set_Style("Заголовок 1");
+
+                var range = paragraph.Range;
+                range.Text = skiServiceByType.Key.ToString();
+
+                range.InsertParagraphAfter();
+
+                #region Таблица
+                var tableParagraph = document.Paragraphs.Add();
+                var tableRange = tableParagraph.Range;
+
+                var ordersTable = document.Tables.Add(tableRange, skiServices.Count(), 3);
+                ordersTable.Borders.InsideLineStyle =WdLineStyle.wdLineStyleSingle;
+                ordersTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                ordersTable.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                #region Заголовок таблицы
+                ordersTable.Rows[1].Range.Bold = 1;
+                ordersTable.Rows[1].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                ordersTable.Cell(1, 1).Range.Text = "Id";
+                ordersTable.Cell(1, 2).Range.Text = "Наименование услуги";
+                ordersTable.Cell(1, 3).Range.Text = "Стоимость";
+                #endregion
+
+                #region Заполнение таблицы
+                var row = 2;
+                foreach (var order in skiServices)
+                {
+                    ordersTable.Cell(row, 1).Range.Text = order.Id.ToString();
+                    ordersTable.Cell(row, 1).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 2).Range.Text = order.ServiceName.ToString();
+                    ordersTable.Cell(row, 2).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    ordersTable.Cell(row, 3).Range.Text = order.PriceForHour.ToString();
+                    ordersTable.Cell(row, 3).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    row++;
+                }
+                #endregion
+                #endregion
+
+                document.Words.Last.InsertBreak(WdBreakType.wdSectionBreakNextPage);
+            }
+
+            word.Visible = true;
+
+            return document;
         }
     }
 }

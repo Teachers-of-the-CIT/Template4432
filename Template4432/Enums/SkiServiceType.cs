@@ -1,9 +1,17 @@
-﻿namespace Template4432.Enums
+﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+
+namespace Template4432.Enums
 {
     public enum SkiServiceType
     {
+        [EnumMember(Value = "Прокат")]
         Rent,
+        
+        [EnumMember(Value = "Подъем")]
         Uphill,
+        
+        [EnumMember(Value = "Обучение")]
         Training
     }
 
