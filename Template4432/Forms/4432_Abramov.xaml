@@ -11,9 +11,14 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label Grid.Row="0">Audi 100 C3 Sport Exklusiv S743</Label>
         <Label Grid.Row="1">Возраст: 32</Label>
         <Label Grid.Row="2">Двигатель: МС2 (165 л.с., рабочий объем: 2.23 л., степень сжатия: 8.4, октановое число бензина: 95, диаметр цилиндров: 81 мм)</Label>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="ExportForExcelButton" Margin="10" Width="250" Click="ExportForExcelButton_OnClick">Экспорт в Excel</Button>
+            <Button x:Name="ImportButton" Margin="10" Width="250" Click="ImportButton_OnClick">Импорт данных</Button>
+        </StackPanel>
     </Grid>
 </Window>

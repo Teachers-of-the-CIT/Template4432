@@ -112,10 +112,17 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Application\Base\EntityService.cs" />
+    <Compile Include="Application\SkiServiceService.cs" />
+    <Compile Include="Contexts\ApplicationContext.cs" />
+    <Compile Include="Enums\SkiServiceType.cs" />
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IExcelDataService.cs" />
+    <Compile Include="Models\Base\Entity.cs" />
+    <Compile Include="Models\SkiService.cs" />
     <Compile Include="Services.cs">
       <DependentUpon>ServicesModel.tt</DependentUpon>
     </Compile>
