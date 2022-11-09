@@ -143,5 +143,11 @@ namespace Template4432
                 };
             }
         }
+
+        private void BnSeventeen_Click(object sender, RoutedEventArgs e)
+        {
+            var samoylovArseniy = new _4432_SamoylovArseniy();
+            samoylovArseniy.ShowDialog();
+        }
     }
 }
