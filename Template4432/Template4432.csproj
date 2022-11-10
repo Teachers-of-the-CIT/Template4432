@@ -112,6 +112,9 @@
     <Compile Include="4432_Zaripov.xaml.cs">
       <DependentUpon>4432_Zaripov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Zorin.xaml.cs">
+      <DependentUpon>4432_Zorin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Export\Models\SecondOptionModel.cs" />
     <Compile Include="Forms\4432_Abramov.xaml.cs">
       <DependentUpon>4432_Abramov.xaml</DependentUpon>
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_Zaripov.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Zorin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -143,5 +143,10 @@ namespace Template4432
                 };
             }
         }
+
+        private void Bn69_Click(object sender, RoutedEventArgs e)
+        {
+            new _4432_Zorin().ShowDialog();
+        }
     }
 }

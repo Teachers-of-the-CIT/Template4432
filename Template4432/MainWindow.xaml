@@ -55,5 +55,6 @@
         <Button x:Name="BnFifteen" Content="Рахимов Рамиль" Grid.Row="15" Click="BnFifteen_Click"></Button>
         <Button x:Name="BnFour" Content="Бастанов Айрат" Grid.Row="4" Click="BnFour_Click"></Button>
         <Button x:Name="Bn5" Content="Ашрафзянов Марат" Grid.Row="5" Click="BnUniversal"></Button>
+        <Button x:Name="Bn69" Content="Зорин В.С." Grid.Row="6" Click="Bn69_Click"></Button>
     </Grid>
 </Window>
