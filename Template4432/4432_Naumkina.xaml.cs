@@ -1,10 +1,13 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -56,18 +60,18 @@ namespace Template4432
             workbook.Close(false, Type.Missing, Type.Missing);
             Excel.Quit();
             GC.Collect();
-            using (Model1Container1 db = new Model1Container1())
+            using (Entities db = new Entities())
             {
                 for (int i = 1; i < lastRow; i++)
                 {
-                    Order o = new Order() { Code = list[i, 1], Date = DateTime.ParseExact(list[i, 2], "d.M.yy", CultureInfo.InvariantCulture), Time = DateTime.ParseExact(list[i, 3], "H:mm", CultureInfo.InvariantCulture), ClientCode = int.Parse(list[i, 4]), Services = list[i, 5], Status = list[i, 6], RentTime = list[i, 8] };
+                    OrderSet o = new OrderSet() { Code = list[i, 1], Date = list[i, 2], Time = list[i, 3], ClientCode = list[i, 4], Services = list[i, 5], Status = list[i, 6], RentTime = list[i, 8] };
                     if (list[i, 7] == "")
                     {
                         o.ClosingDate = null;
                     }
                     else
                     {
-                        o.ClosingDate = DateTime.ParseExact(list[i, 7], "d.M.yy", CultureInfo.InvariantCulture);
+                        o.ClosingDate = list[i, 7];
                     }
                     db.OrderSet.Add(o);
                 }
@@ -77,8 +81,8 @@ namespace Template4432
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            List<Order> orders;
-            using (Model1Container1 db = new Model1Container1())
+            List<OrderSet> orders = new List<OrderSet>();
+            using (Entities db = new Entities())
             {
                 orders = db.OrderSet.ToList();
             }
@@ -101,7 +105,7 @@ namespace Template4432
             int _new = 2;
             int rent = 2;
             int close = 2;
-            foreach (Order order in orders)
+            foreach (OrderSet order in orders)
             {
                 int k = 0;
                 int m = 1;
@@ -144,9 +148,119 @@ namespace Template4432
                 {
                     k = close - 1;
                 }
-                Range borders = worksheets[i].Range[worksheets[i].Cells[1][1], worksheets[i].Cells[5][k]];
-                borders.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = borders.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = borders.Borders[XlBordersIndex.xlEdgeTop].LineStyle = borders.Borders[XlBordersIndex.xlEdgeRight].LineStyle = borders.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = borders.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
+                Microsoft.Office.Interop.Excel.Range borders = worksheets[i].Range[worksheets[i].Cells[1][1], worksheets[i].Cells[5][k]];
+                borders.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = borders.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = borders.Borders[XlBordersIndex.xlEdgeTop].LineStyle = borders.Borders[XlBordersIndex.xlEdgeRight].LineStyle = borders.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = borders.Borders[XlBordersIndex.xlInsideVertical].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
                 worksheets[i].Columns.AutoFit();
+            }
+            app.Visible = true;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            string f = File.ReadAllText(@"D:\Документы\Шарага\ИСРПО\Лабораторная работа 3\Данные для импорта.json");
+            f = f.Trim('[');
+            f = f.Trim(']');
+            string[] ordersString = f.Split('}');
+            OrderSet[] orders = new OrderSet[ordersString.Length - 1];
+            using (Entities db = new Entities())
+            {
+                for (int i = 0; i < ordersString.Length - 1; i++)
+                {
+                    ordersString[i] = ordersString[i].Trim(',');
+                    ordersString[i] += "}";
+                    orders[i] = JsonSerializer.Deserialize<OrderSet>(ordersString[i]);
+                    db.OrderSet.Add(orders[i]);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var app = new Microsoft.Office.Interop.Word.Application();
+            Document document = app.Documents.Add();
+            Microsoft.Office.Interop.Word.Paragraph[] paragraphs = new Microsoft.Office.Interop.Word.Paragraph[3];
+            string[] p = { "Новая", "В прокате", "Закрыта" };
+            int[] count = { 0, 0, 0 };
+            using (Entities db = new Entities())
+            {
+                foreach (OrderSet order in db.OrderSet)
+                {
+                    if (order.Status == "Новая")
+                    {
+                        count[0]++;
+                    }
+                    else if (order.Status == "В прокате")
+                    {
+                        count[1]++;
+                    }
+                    else
+                    {
+                        count[2]++;
+                    }
+                }
+
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                paragraphs[i] = document.Paragraphs.Add();
+                Microsoft.Office.Interop.Word.Range range = paragraphs[i].Range;
+                range.Text = p[i];
+                paragraphs[i].set_Style("Заголовок 1");
+                range.InsertParagraphAfter();
+                Microsoft.Office.Interop.Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                Microsoft.Office.Interop.Word.Range tableRange = tableParagraph.Range;
+                Microsoft.Office.Interop.Word.Table table = document.Tables.Add(tableRange, count[i] + 1, 5);
+                table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                table.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                Microsoft.Office.Interop.Word.Range cellRange;
+                cellRange = table.Cell(1, 1).Range;
+                cellRange.Text = "Id";
+                cellRange = table.Cell(1, 2).Range;
+                cellRange.Text = "Код заказа";
+                cellRange = table.Cell(1, 3).Range;
+                cellRange.Text = "Дата создания";
+                cellRange = table.Cell(1, 4).Range;
+                cellRange.Text = "Код клиента";
+                cellRange = table.Cell(1, 5).Range;
+                cellRange.Text = "Услуги";
+                table.Rows[1].Range.Bold = 1;
+                table.Rows[1].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                using (Entities db = new Entities())
+                {
+                    int j = 2;
+                    foreach (OrderSet order in db.OrderSet)
+                    {
+                        if (order.Status == p[i])
+                        {
+                            cellRange = table.Cell(j, 1).Range;
+                            cellRange.Text = order.ID.ToString();
+                            cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = table.Cell(j, 2).Range;
+                            cellRange.Text = order.Code.ToString();
+                            cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = table.Cell(j, 3).Range;
+                            cellRange.Text = order.Date.ToString();
+                            cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = table.Cell(j, 4).Range;
+                            cellRange.Text = order.ClientCode.ToString();
+                            cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = table.Cell(j, 5).Range;
+                            cellRange.Text = order.Services.ToString();
+                            cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                            j++;
+                        }
+                    }
+                }
+                Microsoft.Office.Interop.Word.Paragraph countOrdersParagraph = document.Paragraphs.Add();
+                Microsoft.Office.Interop.Word.Range countOrdersRange = countOrdersParagraph.Range;
+                countOrdersRange.Text = "Количество заказов: " + count[i];
+                countOrdersRange.Font.Color = WdColor.wdColorDarkRed;
+                countOrdersRange.InsertParagraphAfter();
+                if (i != 2)
+                {
+                    document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
+                }
             }
             app.Visible = true;
         }
