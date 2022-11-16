@@ -8,6 +8,6 @@
         Title="_4432_Zorin" Height="450" Width="800">
     <Grid>
         <Label Content="Zorin Vladislav Sergeevich" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Candara" FontSize="36" FontWeight="Bold"/>
-
+        <Button></Button>
     </Grid>
 </Window>
