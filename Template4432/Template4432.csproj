@@ -76,6 +76,9 @@
     <Compile Include="4432_Fakhrutdinov_Marat.xaml.cs">
       <DependentUpon>4432_Fakhrutdinov_Marat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4432_Fayzrakhmanov.xaml.cs">
+      <DependentUpon>4432_Fayzrakhmanov.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4432_Fedorova.xaml.cs">
       <DependentUpon>4432_Fedorova.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4432_Fakhrutdinov_Marat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4432_Fayzrakhmanov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,15 @@
+﻿<Window x:Class="Template4432._4432_Fayzrakhmanov"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Template4432"
+        mc:Ignorable="d"
+        Title="_4432_Fayzrakhmanov" Height="450" Width="800">
+    <Grid>
+        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Файзрахманов Артур" FontFamily="Arial" FontSize="40" Foreground="Indigo" HorizontalAlignment="Center"></Label>
+            <Label Content="11.01.2003" FontFamily="Arial" FontSize="20" Foreground="Indigo" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+    </Grid>
+</Window>

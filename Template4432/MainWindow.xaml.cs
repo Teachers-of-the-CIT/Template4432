@@ -143,5 +143,11 @@ namespace Template4432
                 };
             }
         }
+
+        private void BnTwetnyTwo_Click(object sender, RoutedEventArgs e)
+        {
+            _4432_Fayzrakhmanov window = new _4432_Fayzrakhmanov();
+            window.Show();
+        }
     }
 }
